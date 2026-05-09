@@ -1,0 +1,50 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Uses & Stack{% endblock %}
+{% block topbar_title %}Uses &amp; Stack{% endblock %}
+{% block topbar_actions %}
+  <a href="{% url 'dashboard:uses_item_create' %}" class="btn btn--secondary btn--sm">+ Add Item</a>
+  <a href="{% url 'dashboard:uses_category_create' %}" class="btn btn--primary btn--sm">+ New Category</a>
+{% endblock %}
+
+{% block content %}
+{% if categories %}
+{% for cat in categories %}
+<div class="dash-card" {% if not forloop.first %}style="margin-top:20px;"{% endif %}>
+  <div class="dash-card__header">
+    <h2>{{ cat.title_en }}{% if cat.title_uz %} <span style="color:var(--fg-muted);font-weight:400;">/ {{ cat.title_uz }}</span>{% endif %}</h2>
+    <div style="display:flex;gap:4px;">
+      <a href="{% url 'dashboard:uses_category_edit' cat.pk %}" class="btn btn--ghost btn--sm">Edit</a>
+      <form method="post" action="{% url 'dashboard:uses_category_delete' cat.pk %}" onsubmit="return confirm('Delete category and all items?')" style="margin:0;">{% csrf_token %}<button type="submit" class="btn btn--ghost btn--sm" style="color:var(--danger-500);">Delete</button></form>
+    </div>
+  </div>
+  <div class="dash-card__body">
+    {% if cat.items.all %}
+    <table class="dash-table">
+      <thead><tr><th>Name</th><th>Note</th><th>Order</th><th style="width:140px;"></th></tr></thead>
+      <tbody>
+        {% for item in cat.items.all %}
+        <tr>
+          <td><strong>{{ item.name }}</strong></td>
+          <td style="color:var(--fg-muted);">{{ item.note_en|truncatewords:10 }}</td>
+          <td>{{ item.order }}</td>
+          <td>
+            <div style="display:flex;gap:4px;justify-content:flex-end;">
+              <a href="{% url 'dashboard:uses_item_edit' item.pk %}" class="btn btn--ghost btn--sm">Edit</a>
+              <form method="post" action="{% url 'dashboard:uses_item_delete' item.pk %}" onsubmit="return confirm('Delete?')" style="margin:0;">{% csrf_token %}<button type="submit" class="btn btn--ghost btn--sm" style="color:var(--danger-500);">Delete</button></form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="dash-empty"><div class="dash-empty__desc">No items in this category yet.</div></div>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="dash-card"><div class="dash-card__body"><div class="dash-empty"><div class="dash-empty__title">No categories yet</div><div class="dash-empty__desc">Create a category to organize your tech stack.</div></div></div></div>
+{% endif %}
+{% endblock %}

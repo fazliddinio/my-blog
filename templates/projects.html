@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n_tags %}
+
+{% block title %}{% tr "Projects" "Loyihalar" %} — fazliddin.com{% endblock %}
+
+{% block content %}
+{% get_lang as LANG %}
+<div class="page-wrapper">
+  <div class="page-header">
+    <div class="eyebrow" style="margin-bottom:14px;">
+      <span class="tr" data-en="Open source" data-uz="Ochiq kod">{% tr "Open source" "Ochiq kod" %}</span>
+    </div>
+    <h1 class="page-header__title">
+      <span class="tr" data-en="Things I've built and given away." data-uz="Men yaratgan va bepul ulashgan narsalar.">{% tr "Things I've built and given away." "Men yaratgan va bepul ulashgan narsalar." %}</span>
+    </h1>
+    <p class="page-header__lead">
+      <span class="tr" data-en="Mostly tiny tools. A few of them found an audience." data-uz="Asosan kichik vositalar. Ba'zilari auditoriya topdi.">{% tr "Mostly tiny tools. A few of them found an audience." "Asosan kichik vositalar. Ba'zilari auditoriya topdi." %}</span>
+    </p>
+  </div>
+
+  <div class="project-grid">
+    {% for p in projects %}
+    <a href="{{ p.href }}" class="project-card" target="_blank" rel="noopener">
+      <div class="project-card__header">
+        <span class="project-card__name">{{ p.name }}</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+      </div>
+      <div class="project-card__tagline">
+        <span class="tr" data-en="{{ p.tagline_en }}" data-uz="{{ p.tagline_uz }}">{% bi p "tagline" %}</span>
+      </div>
+      <p class="project-card__desc">
+        <span class="tr" data-en="{{ p.desc_en }}" data-uz="{{ p.desc_uz }}">{% bi p "desc" %}</span>
+      </p>
+      <div class="project-card__meta">
+        <span class="project-card__lang">
+          <span class="lang-dot" style="background:{{ p.lang_color }};"></span>
+          {{ p.language }}
+        </span>
+        <span class="project-card__stars">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          {{ p.stars|floatformat:"0" }}
+        </span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

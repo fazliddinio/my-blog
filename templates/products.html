@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n_tags %}
+
+{% block title %}{% tr "Products" "Mahsulotlar" %} — fazliddin.com{% endblock %}
+
+{% block content %}
+{% get_lang as LANG %}
+<div class="page-wrapper">
+  <div class="page-header">
+    <div class="eyebrow" style="margin-bottom:14px;">
+      <span class="tr" data-en="For sale" data-uz="Sotuvda">{% tr "For sale" "Sotuvda" %}</span>
+    </div>
+    <h1 class="page-header__title">
+      <span class="tr" data-en="Things I made that you can buy." data-uz="Men yaratgan, sotib olishingiz mumkin bo'lgan narsalar.">{% tr "Things I made that you can buy." "Men yaratgan, sotib olishingiz mumkin bo'lgan narsalar." %}</span>
+    </h1>
+    <p class="page-header__lead">
+      <span class="tr" data-en="A course, a tool, and a small book. Each one started as something I wanted for myself." data-uz="Bir kurs, bir vosita va kichik kitob. Har biri o'zim uchun xohlagan narsa sifatida boshlangan.">{% tr "A course, a tool, and a small book. Each one started as something I wanted for myself." "Bir kurs, bir vosita va kichik kitob. Har biri o'zim uchun xohlagan narsa sifatida boshlangan." %}</span>
+    </p>
+  </div>
+
+  <div class="products-grid">
+    {% for p in products %}
+    <div class="product-card">
+      <div class="product-card__header">
+        <span class="eyebrow tr" data-en="{{ p.kind_en }}" data-uz="{{ p.kind_uz }}">{% bi p "kind" %}</span>
+        <span class="product-card__price">
+          <span class="tr" data-en="{{ p.price_en }}" data-uz="{{ p.price_uz|default:p.price_en }}">{% bi p "price" %}</span>
+        </span>
+      </div>
+      <h3 class="product-card__title">
+        <span class="tr" data-en="{{ p.name_en }}" data-uz="{{ p.name_uz }}">{% bi p "name" %}</span>
+      </h3>
+      <p class="product-card__blurb">
+        <span class="tr" data-en="{{ p.blurb_en }}" data-uz="{{ p.blurb_uz }}">{% bi p "blurb" %}</span>
+      </p>
+      <ul class="product-card__bullets">
+        {% for b in p.bullets.all %}
+        <li class="product-card__bullet">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          <span class="tr" data-en="{{ b.text_en }}" data-uz="{{ b.text_uz }}">{% bi b "text" %}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      <div style="margin-top:6px;">
+        <a href="{% url 'blog:product_detail' p.slug %}" class="btn btn--primary">
+          <span class="tr" data-en="{{ p.cta_en }}" data-uz="{{ p.cta_uz }}">{% bi p "cta" %}</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Timeline{% endblock %}
+{% block topbar_title %}Timeline{% endblock %}
+{% block topbar_actions %}<a href="{% url 'dashboard:timeline_create' %}" class="btn btn--primary btn--sm">+ New Entry</a>{% endblock %}
+{% block content %}
+<div class="dash-card"><div class="dash-card__body">
+  {% if entries %}
+  <table class="dash-table">
+    <thead><tr><th>Period</th><th>Description</th><th>Order</th><th style="width:140px;"></th></tr></thead>
+    <tbody>
+      {% for e in entries %}
+      <tr>
+        <td><strong>{{ e.period_en }}</strong></td>
+        <td style="color:var(--fg-muted);">{{ e.description_en|truncatewords:10 }}</td>
+        <td>{{ e.order }}</td>
+        <td>
+          <div style="display:flex;gap:4px;justify-content:flex-end;">
+            <a href="{% url 'dashboard:timeline_edit' e.pk %}" class="btn btn--ghost btn--sm">Edit</a>
+            <form method="post" action="{% url 'dashboard:timeline_delete' e.pk %}" onsubmit="return confirm('Delete?')" style="margin:0;">{% csrf_token %}<button type="submit" class="btn btn--ghost btn--sm" style="color:var(--danger-500);">Delete</button></form>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="dash-empty"><div class="dash-empty__title">No timeline entries yet</div></div>
+  {% endif %}
+</div></div>
+{% endblock %}

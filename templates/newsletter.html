@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n_tags %}
+
+{% block title %}{% tr "Newsletter" "Yangiliklar" %} — fazliddin.com{% endblock %}
+
+{% block content %}
+{% get_lang as LANG %}
+<div class="page-wrapper page-wrapper--narrow">
+  <div class="page-header">
+    <div class="eyebrow" style="margin-bottom:14px;">
+      <span class="tr" data-en="Email list" data-uz="Pochta ro'yxati">{% tr "Email list" "Pochta ro'yxati" %}</span>
+    </div>
+    <h1 class="page-header__title">
+      <span class="tr" data-en="One email a month. Unsubscribe whenever." data-uz="Oyiga bitta xat. Istalgan vaqtda obunani bekor qiling.">{% tr "One email a month. Unsubscribe whenever." "Oyiga bitta xat. Istalgan vaqtda obunani bekor qiling." %}</span>
+    </h1>
+    <p class="page-header__lead">
+      <span class="tr" data-en="What I shipped, what I read, and one thing I'm thinking about. Sent on the first Monday. Roughly 2,400 readers." data-uz="Nimani yetkazganim, nimani o'qiganim va o'ylab yurgan bir narsa. Har oyning birinchi dushanbasida yuboriladi. Taxminan 2 400 o'quvchi.">{% tr "What I shipped, what I read, and one thing I'm thinking about. Sent on the first Monday. Roughly 2,400 readers." "Nimani yetkazganim, nimani o'qiganim va o'ylab yurgan bir narsa. Har oyning birinchi dushanbasida yuboriladi. Taxminan 2 400 o'quvchi." %}</span>
+    </p>
+  </div>
+
+  <form class="newsletter-form newsletter-form--compact" id="newsletterForm" method="post" action="{% url 'blog:subscribe' %}">
+    {% csrf_token %}
+    <input type="email" name="email" placeholder="you@gmail.com" required>
+    <button type="submit" class="btn btn--primary">
+      <span class="tr" data-en="Subscribe" data-uz="Obuna bo'lish">{% tr "Subscribe" "Obuna bo'lish" %}</span>
+    </button>
+  </form>
+
+  <!-- Recent Issues -->
+  <div style="margin-top:56px;">
+    <h3 class="uses-section__title">
+      <span class="tr" data-en="Recent issues" data-uz="So'nggi sonlar">{% tr "Recent issues" "So'nggi sonlar" %}</span>
+    </h3>
+    <div>
+      {% for issue in issues %}
+      <a href="{% url 'blog:newsletter_issue' issue.number %}" class="issue-row">
+        <span class="issue-row__number">
+          <span class="tr" data-en="Issue #{{ issue.number }}" data-uz="#{{ issue.number }}-son">{% tr "Issue #" "#" %}{{ issue.number }}{% if LANG == 'uz' %}-son{% endif %}</span>
+        </span>
+        <span class="issue-row__date">
+          <span class="tr" data-en="{{ issue.date_en }}" data-uz="{{ issue.date_uz }}">{% bi issue "date" %}</span>
+        </span>
+        <span class="issue-row__title">
+          <span class="tr" data-en="{{ issue.title_en }}" data-uz="{{ issue.title_uz }}">{% bi issue "title" %}</span>
+        </span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+      </a>
+      {% endfor %}
+      <div class="divider"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}

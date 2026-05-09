@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load i18n_tags %}
+
+{% block title %}{% tr "Hire me" "Yollang" %} — fazliddin.com{% endblock %}
+
+{% block content %}
+{% get_lang as LANG %}
+<div class="page-wrapper page-wrapper--narrow">
+  <div class="page-header">
+    <div class="eyebrow" style="margin-bottom:14px;">
+      <span class="tr" data-en="Available" data-uz="Mavjud">{% tr "Available" "Mavjud" %}</span>
+    </div>
+    <h1 class="page-header__title">
+      <span class="tr" data-en="I take on a small amount of consulting work." data-uz="Men kichik miqdordagi konsalting ishlarini olaman.">{% tr "I take on a small amount of consulting work." "Men kichik miqdordagi konsalting ishlarini olaman." %}</span>
+    </h1>
+    <p class="page-header__lead">
+      <span class="tr" data-en="Three to four engagements a year, mostly with early-stage teams. If your problem sounds like one of these, email me." data-uz="Yiliga uch-to'rt loyiha, asosan boshlang'ich bosqichdagi jamoalar bilan. Muammoyingiz bularning biriga o'xshasa, menga yozing.">{% tr "Three to four engagements a year, mostly with early-stage teams. If your problem sounds like one of these, email me." "Yiliga uch-to'rt loyiha, asosan boshlang'ich bosqichdagi jamoalar bilan. Muammoyingiz bularning biriga o'xshasa, menga yozing." %}</span>
+    </p>
+  </div>
+
+  <div style="display:grid;gap:14px;margin-bottom:48px;">
+    <!-- Service 1 -->
+    <div class="service-card">
+      <div>
+        <div class="service-card__header">
+          <h3 class="service-card__title">
+            <span class="tr" data-en="Architecture review" data-uz="Arxitektura tahlili">{% tr "Architecture review" "Arxitektura tahlili" %}</span>
+          </h3>
+          <span class="pill">
+            <span class="tr" data-en="1 week" data-uz="1 hafta">{% tr "1 week" "1 hafta" %}</span>
+          </span>
+        </div>
+        <p class="service-card__desc">
+          <span class="tr" data-en="I read your code, your logs, and your roadmap. You get a written report and a 90-minute call." data-uz="Kodingizni, loglaringizni va yo'l xaritangizni o'qiyman. Yozma hisobot va 90 daqiqalik qo'ng'iroq olasiz.">{% tr "I read your code, your logs, and your roadmap. You get a written report and a 90-minute call." "Kodingizni, loglaringizni va yo'l xaritangizni o'qiyman. Yozma hisobot va 90 daqiqalik qo'ng'iroq olasiz." %}</span>
+        </p>
+      </div>
+      <a href="#contact" class="btn btn--secondary" onclick="document.getElementById('contactForm').querySelector('input').focus()">
+        <span class="tr" data-en="Book a call" data-uz="Qo'ng'iroq belgilash">{% tr "Book a call" "Qo'ng'iroq belgilash" %}</span>
+      </a>
+    </div>
+
+    <!-- Service 2 -->
+    <div class="service-card">
+      <div>
+        <div class="service-card__header">
+          <h3 class="service-card__title">
+            <span class="tr" data-en="Hire-the-first-engineer" data-uz="Birinchi muhandisni yollash">{% tr "Hire-the-first-engineer" "Birinchi muhandisni yollash" %}</span>
+          </h3>
+          <span class="pill">
+            <span class="tr" data-en="3 weeks" data-uz="3 hafta">{% tr "3 weeks" "3 hafta" %}</span>
+          </span>
+        </div>
+        <p class="service-card__desc">
+          <span class="tr" data-en="I help you write the JD, screen candidates, and run the technical loop. Optionally I stay on for the first month." data-uz="Lavozim tavsifini yozish, nomzodlarni saralash va texnik bosqichni o'tkazishda yordam beraman. Birinchi oy davomida qolishim ham mumkin.">{% tr "I help you write the JD, screen candidates, and run the technical loop. Optionally I stay on for the first month." "Lavozim tavsifini yozish, nomzodlarni saralash va texnik bosqichni o'tkazishda yordam beraman. Birinchi oy davomida qolishim ham mumkin." %}</span>
+        </p>
+      </div>
+      <a href="#contact" class="btn btn--secondary" onclick="document.getElementById('contactForm').querySelector('input').focus()">
+        <span class="tr" data-en="Book a call" data-uz="Qo'ng'iroq belgilash">{% tr "Book a call" "Qo'ng'iroq belgilash" %}</span>
+      </a>
+    </div>
+
+    <!-- Service 3 -->
+    <div class="service-card">
+      <div>
+        <div class="service-card__header">
+          <h3 class="service-card__title">
+            <span class="tr" data-en="Mentoring" data-uz="Mentorlik">{% tr "Mentoring" "Mentorlik" %}</span>
+          </h3>
+          <span class="pill">
+            <span class="tr" data-en="Ongoing" data-uz="Davomli">{% tr "Ongoing" "Davomli" %}</span>
+          </span>
+        </div>
+        <p class="service-card__desc">
+          <span class="tr" data-en="Two 45-minute calls a month for engineers who want a sounding board. Limited slots." data-uz="O'z fikrini sinab ko'rmoqchi bo'lgan muhandislar uchun oyiga ikkita 45 daqiqalik qo'ng'iroq. Joy cheklangan.">{% tr "Two 45-minute calls a month for engineers who want a sounding board. Limited slots." "O'z fikrini sinab ko'rmoqchi bo'lgan muhandislar uchun oyiga ikkita 45 daqiqalik qo'ng'iroq. Joy cheklangan." %}</span>
+        </p>
+      </div>
+      <a href="#contact" class="btn btn--secondary" onclick="document.getElementById('contactForm').querySelector('input').focus()">
+        <span class="tr" data-en="Book a call" data-uz="Qo'ng'iroq belgilash">{% tr "Book a call" "Qo'ng'iroq belgilash" %}</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Contact Form -->
+  <div class="contact-box" id="contact">
+    <div class="eyebrow" style="margin-bottom:12px;">
+      <span class="tr" data-en="Send a note" data-uz="Xat yuboring">{% tr "Send a note" "Xat yuboring" %}</span>
+    </div>
+    <p style="margin:0 0 18px;font-size:15px;color:var(--fg-muted);">
+      <span class="tr" data-en="Email me. I read everything. Replies typically within two days." data-uz="Menga yozing. Hammasini o'qiyman. Odatda ikki kun ichida javob beraman.">{% tr "Email me. I read everything. Replies typically within two days." "Menga yozing. Hammasini o'qiyman. Odatda ikki kun ichida javob beraman." %}</span>
+    </p>
+    <form class="contact-form" id="contactForm" method="post" action="{% url 'blog:contact' %}">
+      {% csrf_token %}
+      <input type="email" name="email" placeholder="you@gmail.com" required>
+      <textarea name="message" rows="4" placeholder="{% tr 'What are you working on?' 'Nima ustida ishlayapsiz?' %}" required></textarea>
+      <div>
+        <button type="submit" class="btn btn--primary">
+          <span class="tr" data-en="Send" data-uz="Yuborish">{% tr "Send" "Yuborish" %}</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

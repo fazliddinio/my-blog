@@ -1,0 +1,38 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Products{% endblock %}
+{% block topbar_title %}Products{% endblock %}
+{% block topbar_actions %}<a href="{% url 'dashboard:product_create' %}" class="btn btn--primary btn--sm">+ New Product</a>{% endblock %}
+
+{% block content %}
+<div class="dash-card">
+  <div class="dash-card__body">
+    {% if products %}
+    <table class="dash-table">
+      <thead>
+        <tr><th>Name</th><th>Type</th><th>Price</th><th>Bullets</th><th>Order</th><th style="width:140px;"></th></tr>
+      </thead>
+      <tbody>
+        {% for p in products %}
+        <tr>
+          <td><strong>{{ p.name_en }}</strong></td>
+          <td><span class="dash-badge">{{ p.kind_en }}</span></td>
+          <td>{{ p.price_en }}</td>
+          <td>{{ p.bullets.count }}</td>
+          <td>{{ p.order }}</td>
+          <td>
+            <div style="display:flex;gap:4px;justify-content:flex-end;">
+              <a href="{% url 'dashboard:product_edit' p.pk %}" class="btn btn--ghost btn--sm">Edit</a>
+              <form method="post" action="{% url 'dashboard:product_delete' p.pk %}" onsubmit="return confirm('Delete this product?')" style="margin:0;">{% csrf_token %}<button type="submit" class="btn btn--ghost btn--sm" style="color:var(--danger-500);">Delete</button></form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="dash-empty"><div class="dash-empty__title">No products yet</div></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

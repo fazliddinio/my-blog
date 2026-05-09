@@ -1,0 +1,112 @@
+{% load static i18n_tags %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Dashboard{% endblock %} — fazliddin.com</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+  <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+</head>
+<body>
+  <div class="dash">
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar__logo">
+        <a href="{% url 'dashboard:index' %}">
+          fazliddin<span style="display:inline-block;width:4px;height:4px;border-radius:999px;background:var(--accent-500);margin:0 2px;transform:translateY(-1px);"></span><span style="font-family:var(--font-mono);font-weight:500;color:var(--neutral-400);">com</span>
+        </a>
+      </div>
+
+      <div class="dash-sidebar__body">
+        <nav class="dash-nav">
+          <div class="dash-nav__section">
+            <div class="dash-nav__label">Menu</div>
+            <a href="{% url 'dashboard:index' %}" class="dash-nav__link {% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              Dashboard
+            </a>
+            <a href="{% url 'dashboard:posts' %}" class="dash-nav__link {% if 'post' in request.resolver_match.url_name %}active{% endif %}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></svg>
+              Posts
+            </a>
+            <a href="{% url 'dashboard:projects' %}" class="dash-nav__link {% if 'project' in request.resolver_match.url_name %}active{% endif %}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29a2 2 0 0 0 2.83 0l7.17-7.17a2 2 0 0 0 0-2.83z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
+              Projects
+            </a>
+            <a href="{% url 'dashboard:products' %}" class="dash-nav__link {% if 'product' in request.resolver_match.url_name %}active{% endif %}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+              Products
+            </a>
+          </div>
+
+          <div class="dash-nav__section">
+            <div class="dash-nav__label">Content</div>
+            <a href="{% url 'dashboard:newsletter' %}" class="dash-nav__link {% if 'newsletter' in request.resolver_match.url_name or 'issue' in request.resolver_match.url_name or 'subscriber' in request.resolver_match.url_name %}active{% endif %}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              Newsletter
+              {% if subscribers_count %}<span class="dash-nav__badge">{{ subscribers_count }}</span>{% endif %}
+            </a>
+            <a href="{% url 'dashboard:messages' %}" class="dash-nav__link {% if 'message' in request.resolver_match.url_name %}active{% endif %}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></svg>
+              Messages
+              {% if unread_messages_count %}<span class="dash-nav__badge">{{ unread_messages_count }}</span>{% endif %}
+            </a>
+            <a href="{% url 'dashboard:uses' %}" class="dash-nav__link {% if 'uses' in request.resolver_match.url_name %}active{% endif %}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              Uses &amp; Stack
+            </a>
+            <a href="{% url 'dashboard:timeline' %}" class="dash-nav__link {% if 'timeline' in request.resolver_match.url_name %}active{% endif %}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Timeline
+            </a>
+          </div>
+
+          <div class="dash-nav__section">
+            <a href="{% url 'blog:home' %}" class="dash-nav__link" target="_blank">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+              View Site
+            </a>
+          </div>
+        </nav>
+      </div>
+
+      <div class="dash-sidebar__footer">
+        <div class="dash-sidebar__user">
+          <div class="dash-sidebar__avatar">{{ request.user.username|first|upper }}</div>
+          <span class="dash-sidebar__username">{{ request.user.username }}</span>
+        </div>
+        <a href="{% url 'dashboard:logout' %}" class="dash-sidebar__logout">Logout</a>
+      </div>
+    </aside>
+
+    <main class="dash-main">
+      <div class="dash-topbar">
+        <button class="dash-topbar__toggle" id="dashSidebarToggle" aria-label="Toggle sidebar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/>
+          </svg>
+        </button>
+        <h1 class="dash-topbar__title">{% block topbar_title %}Dashboard{% endblock %}</h1>
+        <div class="dash-topbar__actions">{% block topbar_actions %}{% endblock %}</div>
+      </div>
+
+      <div class="dash-content">
+        {% if messages %}
+        <div style="margin-bottom:20px;">
+          {% for message in messages %}
+          <div class="dash-alert dash-alert--{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+            {{ message }}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+  </div>
+
+  <div class="dash-overlay" id="dashOverlay"></div>
+  <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+</html>

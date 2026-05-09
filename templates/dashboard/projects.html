@@ -1,0 +1,37 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Projects{% endblock %}
+{% block topbar_title %}Projects{% endblock %}
+{% block topbar_actions %}<a href="{% url 'dashboard:project_create' %}" class="btn btn--primary btn--sm">+ New Project</a>{% endblock %}
+
+{% block content %}
+<div class="dash-card">
+  <div class="dash-card__body">
+    {% if projects %}
+    <table class="dash-table">
+      <thead>
+        <tr><th>Name</th><th>Language</th><th>Stars</th><th>Order</th><th style="width:140px;"></th></tr>
+      </thead>
+      <tbody>
+        {% for p in projects %}
+        <tr>
+          <td><strong>{{ p.name }}</strong></td>
+          <td><span class="dash-badge">{{ p.language }}</span></td>
+          <td>{{ p.stars }}</td>
+          <td>{{ p.order }}</td>
+          <td>
+            <div style="display:flex;gap:4px;justify-content:flex-end;">
+              <a href="{% url 'dashboard:project_edit' p.pk %}" class="btn btn--ghost btn--sm">Edit</a>
+              <form method="post" action="{% url 'dashboard:project_delete' p.pk %}" onsubmit="return confirm('Delete this project?')" style="margin:0;">{% csrf_token %}<button type="submit" class="btn btn--ghost btn--sm" style="color:var(--danger-500);">Delete</button></form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="dash-empty"><div class="dash-empty__title">No projects yet</div></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{% if editing %}Edit Category{% else %}New Category{% endif %}{% endblock %}
+{% block topbar_title %}{% if editing %}Edit Category{% else %}New Category{% endif %}{% endblock %}
+{% block topbar_actions %}<a href="{% url 'dashboard:uses' %}" class="btn btn--ghost btn--sm">← Back</a>{% endblock %}
+{% block content %}
+<div class="dash-card"><div class="dash-card__body">
+  <form method="post" class="dash-form">{% csrf_token %}
+    <div class="dash-form__row">
+      <div class="dash-form__group"><label class="dash-form__label">Title (EN) *</label><input type="text" name="title_en" class="dash-form__input" value="{{ form.title_en.value|default:'' }}" required></div>
+      <div class="dash-form__group"><label class="dash-form__label">Title (UZ)</label><input type="text" name="title_uz" class="dash-form__input" value="{{ form.title_uz.value|default:'' }}"></div>
+    </div>
+    <div class="dash-form__group"><label class="dash-form__label">Order</label><input type="number" name="order" class="dash-form__input" value="{{ form.order.value|default:'0' }}" style="max-width:100px;"></div>
+    <div class="dash-form__actions"><button type="submit" class="btn btn--primary">Save</button><a href="{% url 'dashboard:uses' %}" class="btn btn--secondary">Cancel</a></div>
+  </form>
+</div></div>
+{% endblock %}

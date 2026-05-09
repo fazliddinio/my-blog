@@ -1,0 +1,77 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Newsletter{% endblock %}
+{% block topbar_title %}Newsletter{% endblock %}
+{% block topbar_actions %}<a href="{% url 'dashboard:issue_create' %}" class="btn btn--primary btn--sm">+ New Issue</a>{% endblock %}
+
+{% block content %}
+<!-- Issues -->
+<div class="dash-card">
+  <div class="dash-card__header">
+    <h2>Issues</h2>
+  </div>
+  <div class="dash-card__body">
+    {% if issues %}
+    <table class="dash-table">
+      <thead><tr><th>#</th><th>Date</th><th>Title</th><th style="width:140px;"></th></tr></thead>
+      <tbody>
+        {% for issue in issues %}
+        <tr>
+          <td><strong>#{{ issue.number }}</strong></td>
+          <td style="color:var(--fg-muted);">{{ issue.date_en }}</td>
+          <td>{{ issue.title_en|truncatewords:12 }}</td>
+          <td>
+            <div style="display:flex;gap:4px;justify-content:flex-end;">
+              <a href="{% url 'dashboard:issue_edit' issue.pk %}" class="btn btn--ghost btn--sm">Edit</a>
+              <form method="post" action="{% url 'dashboard:issue_delete' issue.pk %}" onsubmit="return confirm('Delete?')" style="margin:0;">{% csrf_token %}<button type="submit" class="btn btn--ghost btn--sm" style="color:var(--danger-500);">Delete</button></form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="dash-empty"><div class="dash-empty__title">No issues yet</div></div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Subscribers -->
+<div class="dash-card" style="margin-top:24px;">
+  <div class="dash-card__header">
+    <h2>Subscribers <span class="dash-badge" style="margin-left:8px;">{{ subscribers.count }}</span></h2>
+  </div>
+  <div class="dash-card__body">
+    {% if subscribers %}
+    <table class="dash-table">
+      <thead><tr><th>Email</th><th>Subscribed</th><th>Status</th><th style="width:140px;"></th></tr></thead>
+      <tbody>
+        {% for sub in subscribers %}
+        <tr>
+          <td>{{ sub.email }}</td>
+          <td style="color:var(--fg-muted);">{{ sub.subscribed_at|date:"M d, Y" }}</td>
+          <td>
+            <form method="post" action="{% url 'dashboard:subscriber_toggle' sub.pk %}" style="margin:0;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn--ghost btn--sm" style="padding:0;">
+                {% if sub.is_active %}<span class="dash-badge dash-badge--success">Active</span>
+                {% else %}<span class="dash-badge dash-badge--danger">Inactive</span>{% endif %}
+              </button>
+            </form>
+          </td>
+          <td>
+            <form method="post" action="{% url 'dashboard:subscriber_delete' sub.pk %}" onsubmit="return confirm('Remove subscriber?')" style="margin:0;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn--ghost btn--sm" style="color:var(--danger-500);">Remove</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="dash-empty"><div class="dash-empty__title">No subscribers yet</div></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

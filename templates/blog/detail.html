@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n_tags %}
+
+{% block title %}{% bi post "title" %} — fazliddin.com{% endblock %}
+
+{% block content %}
+{% get_lang as LANG %}
+<div class="page-wrapper page-wrapper--narrow">
+  <article style="padding:8px 0 0;">
+    <a href="{% url 'blog:blog_list' %}" class="post-back">
+      <span class="arrow-back">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </span>
+      <span class="tr" data-en="All posts" data-uz="Barcha yozuvlar">{% tr "All posts" "Barcha yozuvlar" %}</span>
+    </a>
+
+    <div class="eyebrow" style="margin-bottom:14px;">
+      <span class="tr" data-en="Essay" data-uz="Esse">{% tr "Essay" "Esse" %}</span> · {{ post.read_time }} <span class="tr" data-en="min" data-uz="daq">{% tr "min" "daq" %}</span> · {{ post.date|date:"Y-m-d" }}
+    </div>
+
+    <h1 class="post-article__title">
+      <span class="tr" data-en="{{ post.title_en }}" data-uz="{{ post.title_uz }}">{% bi post "title" %}</span>
+    </h1>
+
+    <p class="post-article__dek">
+      <span class="tr" data-en="{{ post.dek_en }}" data-uz="{{ post.dek_uz }}">{% bi post "dek" %}</span>
+    </p>
+
+    <div class="post-article__body">
+      <div class="tr-html" data-en-html="content_en" data-uz-html="content_uz">
+        {% if LANG == 'uz' and post.content_uz %}
+          {{ post.content_uz|safe }}
+        {% else %}
+          {{ post.content_en|safe }}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="post-tags">
+      <span class="tag"><span class="tag__hash">#</span>{{ post.tag }}</span>
+    </div>
+
+    <div class="post-author">
+      <div class="eyebrow" style="margin-bottom:8px;">
+        <span class="tr" data-en="About the author" data-uz="Muallif haqida">{% tr "About the author" "Muallif haqida" %}</span>
+      </div>
+      <p>
+        <span class="tr"
+          data-en="I write at <strong>fazliddin.com</strong> about engineering essays and side projects. <a href='{% url 'blog:newsletter' %}'>Subscribe</a> to get one of these in your inbox a month."
+          data-uz="Men <strong>fazliddin.com</strong>da muhandislik esselari va yondosh loyihalar haqida yozaman. <a href='{% url 'blog:newsletter' %}'>Obuna bo'ling</a> — oyiga bittasini pochtangizga olish uchun.">
+          {% tr "I write at " "Men " %}<strong>fazliddin.com</strong>{% tr " about engineering essays and side projects. " "da muhandislik esselari va yondosh loyihalar haqida yozaman. " %}<a href="{% url 'blog:newsletter' %}">{% tr "Subscribe" "Obuna bo'ling" %}</a>{% tr " to get one of these in your inbox a month." " — oyiga bittasini pochtangizga olish uchun." %}
+        </span>
+      </p>
+    </div>
+  </article>
+</div>
+{% endblock %}

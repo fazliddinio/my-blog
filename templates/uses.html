@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n_tags %}
+
+{% block title %}{% tr "Uses" "Vositalar" %} — fazliddin.com{% endblock %}
+
+{% block content %}
+{% get_lang as LANG %}
+<div class="page-wrapper page-wrapper--narrow">
+  <div class="page-header">
+    <div class="eyebrow" style="margin-bottom:14px;">
+      <span class="tr" data-en="My tech stack" data-uz="Mening tarkibim">{% tr "My tech stack" "Mening tarkibim" %}</span>
+    </div>
+    <h1 class="page-header__title">
+      <span class="tr" data-en="What I use, and why." data-uz="Nimadan foydalanaman, va nega.">{% tr "What I use, and why." "Nimadan foydalanaman, va nega." %}</span>
+    </h1>
+    <p class="page-header__lead">
+      <span class="tr" data-en="Updated whenever something changes — which is rarely. The boring stack is the productive stack." data-uz="Biror narsa o'zgarganda yangilanadi — bu kamdan-kam holat. Zerikarli to'plam — samarali to'plamdir.">{% tr "Updated whenever something changes — which is rarely. The boring stack is the productive stack." "Biror narsa o'zgarganda yangilanadi — bu kamdan-kam holat. Zerikarli to'plam — samarali to'plamdir." %}</span>
+    </p>
+  </div>
+
+  <div style="display:grid;gap:40px;">
+    {% for cat in categories %}
+    <section class="uses-section">
+      <h2 class="uses-section__title">
+        <span class="tr" data-en="{{ cat.title_en }}" data-uz="{{ cat.title_uz }}">{% bi cat "title" %}</span>
+      </h2>
+      <dl style="margin:0;">
+        {% for item in cat.items.all %}
+        <div class="uses-item">
+          <dt class="uses-item__name">{{ item.name }}</dt>
+          <dd class="uses-item__note">
+            <span class="tr" data-en="{{ item.note_en }}" data-uz="{{ item.note_uz }}">{% bi item "note" %}</span>
+          </dd>
+        </div>
+        {% endfor %}
+      </dl>
+    </section>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

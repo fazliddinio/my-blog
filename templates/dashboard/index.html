@@ -1,0 +1,83 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block topbar_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dash-stats">
+  <div class="dash-stat">
+    <div class="dash-stat__label">Total Posts</div>
+    <div class="dash-stat__value">{{ stats.posts }}</div>
+  </div>
+  <div class="dash-stat">
+    <div class="dash-stat__label">Subscribers</div>
+    <div class="dash-stat__value">{{ stats.subscribers }}</div>
+  </div>
+  <div class="dash-stat">
+    <div class="dash-stat__label">Unread Messages</div>
+    <div class="dash-stat__value">{{ stats.messages }}</div>
+  </div>
+  <div class="dash-stat">
+    <div class="dash-stat__label">Projects</div>
+    <div class="dash-stat__value">{{ stats.projects }}</div>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2>Recent Messages</h2>
+      <a href="{% url 'dashboard:messages' %}" class="btn btn--ghost btn--sm">View all →</a>
+    </div>
+    <div class="dash-card__body">
+      {% if recent_messages %}
+      <table class="dash-table">
+        <thead>
+          <tr><th>Email</th><th>Preview</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          {% for msg in recent_messages %}
+          <tr>
+            <td><strong>{{ msg.email }}</strong></td>
+            <td style="color:var(--fg-muted);">{{ msg.message|truncatewords:8 }}</td>
+            <td>
+              {% if msg.is_read %}<span class="dash-badge dash-badge--success">Read</span>
+              {% else %}<span class="dash-badge dash-badge--warning">New</span>{% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="dash-empty"><p>No messages yet.</p></div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="dash-card">
+    <div class="dash-card__header">
+      <h2>Recent Subscribers</h2>
+      <a href="{% url 'dashboard:newsletter' %}" class="btn btn--ghost btn--sm">View all →</a>
+    </div>
+    <div class="dash-card__body">
+      {% if recent_subscribers %}
+      <table class="dash-table">
+        <thead>
+          <tr><th>Email</th><th>Subscribed</th></tr>
+        </thead>
+        <tbody>
+          {% for sub in recent_subscribers %}
+          <tr>
+            <td>{{ sub.email }}</td>
+            <td style="color:var(--fg-muted);">{{ sub.subscribed_at|date:"M d, Y" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="dash-empty"><p>No subscribers yet.</p></div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

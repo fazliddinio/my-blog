@@ -1,0 +1,119 @@
+{% extends "dashboard/base.html" %}
+{% load i18n_tags %}
+
+{% block title %}{% if editing %}Edit Product{% else %}New Product{% endif %}{% endblock %}
+
+{% block content %}
+<div class="dash-card">
+  <div class="dash-card__header">
+    <h2>{% if editing %}Edit Product{% else %}New Product{% endif %}</h2>
+  </div>
+  <div class="dash-card__body">
+    <form method="post" class="dash-form">
+      {% csrf_token %}
+
+      <div class="dash-form__group">
+        <label class="dash-form__label" for="id_slug">Slug</label>
+        <input type="text" name="slug" id="id_slug" class="dash-form__input" value="{{ form.slug.value|default:'' }}">
+        <span class="dash-form__help">Leave blank to auto-generate from name.</span>
+      </div>
+
+      <div class="dash-form__row">
+        <div class="dash-form__group">
+          <label class="dash-form__label" for="id_name_en">Name (EN)</label>
+          <input type="text" name="name_en" id="id_name_en" class="dash-form__input" value="{{ form.name_en.value|default:'' }}" required>
+        </div>
+        <div class="dash-form__group">
+          <label class="dash-form__label" for="id_name_uz">Name (UZ)</label>
+          <input type="text" name="name_uz" id="id_name_uz" class="dash-form__input" value="{{ form.name_uz.value|default:'' }}">
+        </div>
+      </div>
+
+      <div class="dash-form__row">
+        <div class="dash-form__group">
+          <label class="dash-form__label" for="id_kind_en">Kind (EN)</label>
+          <input type="text" name="kind_en" id="id_kind_en" class="dash-form__input" value="{{ form.kind_en.value|default:'' }}" placeholder="Course, SaaS, eBook..." required>
+        </div>
+        <div class="dash-form__group">
+          <label class="dash-form__label" for="id_kind_uz">Kind (UZ)</label>
+          <input type="text" name="kind_uz" id="id_kind_uz" class="dash-form__input" value="{{ form.kind_uz.value|default:'' }}">
+        </div>
+      </div>
+
+      <div class="dash-form__row">
+        <div class="dash-form__group">
+          <label class="dash-form__label" for="id_price_en">Price (EN)</label>
+          <input type="text" name="price_en" id="id_price_en" class="dash-form__input" value="{{ form.price_en.value|default:'' }}" placeholder="$24" required>
+        </div>
+        <div class="dash-form__group">
+          <label class="dash-form__label" for="id_price_uz">Price (UZ)</label>
+          <input type="text" name="price_uz" id="id_price_uz" class="dash-form__input" value="{{ form.price_uz.value|default:'' }}">
+        </div>
+      </div>
+
+      <div class="dash-form__row">
+        <div class="dash-form__group">
+          <label class="dash-form__label" for="id_blurb_en">Blurb (EN)</label>
+          <textarea name="blurb_en" id="id_blurb_en" class="dash-form__textarea" rows="3">{{ form.blurb_en.value|default:'' }}</textarea>
+        </div>
+        <div class="dash-form__group">
+          <label class="dash-form__label" for="id_blurb_uz">Blurb (UZ)</label>
+          <textarea name="blurb_uz" id="id_blurb_uz" class="dash-form__textarea" rows="3">{{ form.blurb_uz.value|default:'' }}</textarea>
+        </div>
+      </div>
+
+      <div class="dash-form__group">
+        <label class="dash-form__label" for="id_content_en">Content (EN)</label>
+        <textarea name="content_en" id="id_content_en" class="dash-form__textarea" rows="12">{{ form.content_en.value|default:'' }}</textarea>
+      </div>
+
+      <div class="dash-form__group">
+        <label class="dash-form__label" for="id_content_uz">Content (UZ)</label>
+        <textarea name="content_uz" id="id_content_uz" class="dash-form__textarea" rows="12">{{ form.content_uz.value|default:'' }}</textarea>
+      </div>
+
+      <div class="dash-form__row">
+        <div class="dash-form__group">
+          <label class="dash-form__label" for="id_cta_en">CTA Button Text (EN)</label>
+          <input type="text" name="cta_en" id="id_cta_en" class="dash-form__input" value="{{ form.cta_en.value|default:'' }}" placeholder="Buy now" required>
+        </div>
+        <div class="dash-form__group">
+          <label class="dash-form__label" for="id_cta_uz">CTA Button Text (UZ)</label>
+          <input type="text" name="cta_uz" id="id_cta_uz" class="dash-form__input" value="{{ form.cta_uz.value|default:'' }}">
+        </div>
+      </div>
+
+      <div class="dash-form__group">
+        <label class="dash-form__label" for="id_order">Display Order</label>
+        <input type="number" name="order" id="id_order" class="dash-form__input" value="{{ form.order.value|default:'0' }}" style="max-width:120px;">
+      </div>
+
+      <!-- Bullet Points -->
+      <div style="border-top:1px solid var(--border);margin-top:24px;padding-top:24px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <label class="dash-form__label" style="margin:0;">Bullet Points</label>
+          <button type="button" id="addBullet" class="btn btn--secondary btn--sm">+ Add bullet</button>
+        </div>
+        <div id="bulletsList">
+          {% for b in bullets %}
+          <div class="dash-form__row" style="align-items:flex-end;">
+            <div class="dash-form__group" style="flex:1;">
+              <input type="text" name="bullet_text_en" class="dash-form__input" value="{{ b.text_en }}" placeholder="Bullet (English)">
+            </div>
+            <div class="dash-form__group" style="flex:1;">
+              <input type="text" name="bullet_text_uz" class="dash-form__input" value="{{ b.text_uz }}" placeholder="Bullet (Uzbek)">
+            </div>
+            <button type="button" class="btn btn--ghost btn--sm" onclick="this.parentElement.remove()" style="margin-bottom:4px;color:var(--danger-500);">Remove</button>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="dash-form__row" style="margin-top:24px;">
+        <button type="submit" class="btn btn--primary">Save Product</button>
+        <a href="{% url 'dashboard:products' %}" class="btn btn--secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load i18n_tags %}
+
+{% block title %}{% tr "Writing" "Yozuvlar" %} — fazliddin.com{% endblock %}
+
+{% block content %}
+{% get_lang as LANG %}
+<div class="page-wrapper">
+  <div class="page-header">
+    <div class="eyebrow" style="margin-bottom:14px;">
+      <span class="tr" data-en="Writing" data-uz="Yozuvlar">{% tr "Writing" "Yozuvlar" %}</span>
+    </div>
+    <h1 class="page-header__title">
+      <span class="tr" data-en="Essays, deep dives, and the occasional rant." data-uz="Esselar, chuqur tahlillar va vaqti-vaqti bilan ehtirosli mulohazalar.">{% tr "Essays, deep dives, and the occasional rant." "Esselar, chuqur tahlillar va vaqti-vaqti bilan ehtirosli mulohazalar." %}</span>
+    </h1>
+    <p class="page-header__lead">
+      <span class="tr" data-en="Long-form posts on engineering, career, and what I'm shipping. About one a month." data-uz="Muhandislik, karyera va men yetkazayotgan ishlar haqida uzun postlar. Oyiga bittaga yaqin.">{% tr "Long-form posts on engineering, career, and what I'm shipping. About one a month." "Muhandislik, karyera va men yetkazayotgan ishlar haqida uzun postlar. Oyiga bittaga yaqin." %}</span>
+    </p>
+  </div>
+
+  <!-- Tag Filters -->
+  <div class="tag-filters">
+    {% for t in tags %}
+    <a href="{% if t == 'all' %}{% url 'blog:blog_list' %}{% else %}{% url 'blog:blog_list' %}?tag={{ t }}{% endif %}"
+       class="tag-filter {% if t == current_tag %}active{% endif %}">
+      {% if t == 'all' %}<span class="tr" data-en="All" data-uz="Hammasi">{% tr "All" "Hammasi" %}</span>{% else %}#{{ t }}{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+
+  <!-- Posts by Year -->
+  <div>
+    {% for year, posts in posts_by_year %}
+    <div style="margin-bottom:32px;">
+      <div class="year-label">{{ year }}</div>
+      {% for post in posts %}
+      <a href="{% url 'blog:post_detail' post.slug %}" class="post-row">
+        <div class="post-row__date">{{ post.date|date:"Y-m-d" }}</div>
+        <div>
+          <div class="post-row__title">
+            <span class="tr" data-en="{{ post.title_en }}" data-uz="{{ post.title_uz }}">{% bi post "title" %}</span>
+          </div>
+          <div class="post-row__dek">
+            <span class="tr" data-en="{{ post.dek_en }}" data-uz="{{ post.dek_uz }}">{% bi post "dek" %}</span>
+          </div>
+        </div>
+        <div class="post-row__read">{{ post.read_time }} <span class="tr" data-en="min" data-uz="daq">{% tr "min" "daq" %}</span></div>
+      </a>
+      {% endfor %}
+      <div class="divider"></div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

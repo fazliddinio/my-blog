@@ -1,0 +1,91 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}{% if editing %}Edit Post{% else %}New Post{% endif %}{% endblock %}
+{% block topbar_title %}{% if editing %}Edit Post{% else %}New Post{% endif %}{% endblock %}
+{% block topbar_actions %}<a href="{% url 'dashboard:posts' %}" class="btn btn--ghost btn--sm">← Back to Posts</a>{% endblock %}
+
+{% block content %}
+<div class="dash-card">
+  <div class="dash-card__body">
+    {% if form.errors %}
+    <div class="dash-alert dash-alert--danger" style="margin-bottom:20px;">
+      Please fix the errors below.
+      {% for field, errors in form.errors.items %}
+        {% for error in errors %}<br>• {{ field }}: {{ error }}{% endfor %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" class="dash-form">
+      {% csrf_token %}
+
+      <div class="dash-form__row">
+        <div class="dash-form__group">
+          <label class="dash-form__label">Title (English) *</label>
+          <input type="text" name="title_en" id="id_title_en" class="dash-form__input" value="{{ form.title_en.value|default:'' }}" placeholder="Post title" required>
+        </div>
+        <div class="dash-form__group">
+          <label class="dash-form__label">Title (Uzbek)</label>
+          <input type="text" name="title_uz" class="dash-form__input" value="{{ form.title_uz.value|default:'' }}" placeholder="Post sarlavhasi">
+        </div>
+      </div>
+
+      <div class="dash-form__row">
+        <div class="dash-form__group">
+          <label class="dash-form__label">Slug</label>
+          <input type="text" name="slug" id="id_slug" class="dash-form__input" value="{{ form.slug.value|default:'' }}" placeholder="auto-generated">
+          <div class="dash-form__help">Leave blank to auto-generate from title.</div>
+        </div>
+        <div class="dash-form__group">
+          <label class="dash-form__label">Date *</label>
+          <input type="date" name="date" class="dash-form__input" value="{{ form.date.value|default:'' }}" required>
+        </div>
+      </div>
+
+      <div class="dash-form__row">
+        <div class="dash-form__group">
+          <label class="dash-form__label">Tag *</label>
+          <input type="text" name="tag" class="dash-form__input" value="{{ form.tag.value|default:'' }}" placeholder="caching, react, career..." required>
+        </div>
+        <div class="dash-form__group">
+          <label class="dash-form__label">Read Time (minutes) *</label>
+          <input type="number" name="read_time" class="dash-form__input" value="{{ form.read_time.value|default:'' }}" placeholder="8" required>
+        </div>
+      </div>
+
+      <div class="dash-form__row">
+        <div class="dash-form__group">
+          <label class="dash-form__label">Description (English) *</label>
+          <textarea name="dek_en" class="dash-form__textarea" rows="3" placeholder="Short description shown in listings" required>{{ form.dek_en.value|default:'' }}</textarea>
+        </div>
+        <div class="dash-form__group">
+          <label class="dash-form__label">Description (Uzbek)</label>
+          <textarea name="dek_uz" class="dash-form__textarea" rows="3" placeholder="Qisqa tavsif">{{ form.dek_uz.value|default:'' }}</textarea>
+        </div>
+      </div>
+
+      <div class="dash-form__group">
+        <label class="dash-form__label">Content (English)</label>
+        <textarea name="content_en" class="dash-form__textarea" rows="20" placeholder="Full post body — HTML supported">{{ form.content_en.value|default:'' }}</textarea>
+      </div>
+
+      <div class="dash-form__group">
+        <label class="dash-form__label">Content (Uzbek)</label>
+        <textarea name="content_uz" class="dash-form__textarea" rows="20" placeholder="To'liq post matni — HTML qo'llab-quvvatlanadi">{{ form.content_uz.value|default:'' }}</textarea>
+      </div>
+
+      <div class="dash-form__group">
+        <label class="dash-checkbox">
+          <input type="checkbox" name="featured" class="dash-checkbox__input" {% if form.featured.value %}checked{% endif %}>
+          <span class="dash-checkbox__label">Featured post</span>
+        </label>
+      </div>
+
+      <div class="dash-form__actions">
+        <button type="submit" class="btn btn--primary">{% if editing %}Update Post{% else %}Create Post{% endif %}</button>
+        <a href="{% url 'dashboard:posts' %}" class="btn btn--secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{% if editing %}Edit Entry{% else %}New Entry{% endif %}{% endblock %}
+{% block topbar_title %}{% if editing %}Edit Timeline Entry{% else %}New Timeline Entry{% endif %}{% endblock %}
+{% block topbar_actions %}<a href="{% url 'dashboard:timeline' %}" class="btn btn--ghost btn--sm">← Back</a>{% endblock %}
+{% block content %}
+<div class="dash-card"><div class="dash-card__body">
+  <form method="post" class="dash-form">{% csrf_token %}
+    <div class="dash-form__row">
+      <div class="dash-form__group"><label class="dash-form__label">Period (EN) *</label><input type="text" name="period_en" class="dash-form__input" value="{{ form.period_en.value|default:'' }}" placeholder="2024 — now" required></div>
+      <div class="dash-form__group"><label class="dash-form__label">Period (UZ)</label><input type="text" name="period_uz" class="dash-form__input" value="{{ form.period_uz.value|default:'' }}" placeholder="2024 — hozir"></div>
+    </div>
+    <div class="dash-form__row">
+      <div class="dash-form__group"><label class="dash-form__label">Description (EN) *</label><textarea name="description_en" class="dash-form__textarea" rows="3" required>{{ form.description_en.value|default:'' }}</textarea></div>
+      <div class="dash-form__group"><label class="dash-form__label">Description (UZ)</label><textarea name="description_uz" class="dash-form__textarea" rows="3">{{ form.description_uz.value|default:'' }}</textarea></div>
+    </div>
+    <div class="dash-form__group"><label class="dash-form__label">Order</label><input type="number" name="order" class="dash-form__input" value="{{ form.order.value|default:'0' }}" style="max-width:100px;"></div>
+    <div class="dash-form__actions"><button type="submit" class="btn btn--primary">Save</button><a href="{% url 'dashboard:timeline' %}" class="btn btn--secondary">Cancel</a></div>
+  </form>
+</div></div>
+{% endblock %}

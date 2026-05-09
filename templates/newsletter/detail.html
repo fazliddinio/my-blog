@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n_tags %}
+
+{% block title %}Issue #{{ issue.number }} — fazliddin.com{% endblock %}
+
+{% block content %}
+{% get_lang as LANG %}
+<div class="page-wrapper page-wrapper--narrow">
+  <article style="padding:8px 0 0;">
+    <a href="{% url 'blog:newsletter' %}" class="post-back">
+      <span class="arrow-back">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </span>
+      <span class="tr" data-en="All issues" data-uz="Barcha sonlar">{% tr "All issues" "Barcha sonlar" %}</span>
+    </a>
+
+    <div class="eyebrow" style="margin-bottom:14px;">
+      <span class="tr" data-en="Issue #{{ issue.number }}" data-uz="#{{ issue.number }}-son">{% tr "Issue #" "#" %}{{ issue.number }}{% if LANG == 'uz' %}-son{% endif %}</span>
+      ·
+      <span class="tr" data-en="{{ issue.date_en }}" data-uz="{{ issue.date_uz }}">{% bi issue "date" %}</span>
+    </div>
+
+    <h1 class="post-article__title">
+      <span class="tr" data-en="{{ issue.title_en }}" data-uz="{{ issue.title_uz }}">{% bi issue "title" %}</span>
+    </h1>
+
+    <div class="post-article__body" style="margin-top:36px;">
+      {% if LANG == 'uz' and issue.content_uz %}
+        {{ issue.content_uz|safe }}
+      {% else %}
+        {{ issue.content_en|safe }}
+      {% endif %}
+    </div>
+
+    <!-- Subscribe CTA -->
+    <div style="margin-top:48px;padding:28px;background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius-md);">
+      <div class="eyebrow" style="margin-bottom:8px;">
+        <span class="tr" data-en="Subscribe" data-uz="Obuna bo'lish">{% tr "Subscribe" "Obuna bo'lish" %}</span>
+      </div>
+      <p style="font-size:15px;color:var(--fg-muted);margin:0 0 14px;">
+        <span class="tr" data-en="Get the next issue in your inbox. One email a month, unsubscribe anytime." data-uz="Keyingi sonni pochtangizga oling. Oyiga bitta xat, istalgan vaqtda bekor qiling.">{% tr "Get the next issue in your inbox. One email a month, unsubscribe anytime." "Keyingi sonni pochtangizga oling. Oyiga bitta xat, istalgan vaqtda bekor qiling." %}</span>
+      </p>
+      <form class="newsletter-form newsletter-form--compact" id="newsletterForm" method="post" action="{% url 'blog:subscribe' %}">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="you@gmail.com" required>
+        <button type="submit" class="btn btn--primary">
+          <span class="tr" data-en="Subscribe" data-uz="Obuna bo'lish">{% tr "Subscribe" "Obuna bo'lish" %}</span>
+        </button>
+      </form>
+    </div>
+  </article>
+</div>
+{% endblock %}

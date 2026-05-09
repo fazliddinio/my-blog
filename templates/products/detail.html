@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load i18n_tags %}
+
+{% block title %}{% bi product "name" %} — fazliddin.com{% endblock %}
+
+{% block content %}
+{% get_lang as LANG %}
+<div class="page-wrapper page-wrapper--narrow">
+  <article style="padding:8px 0 0;">
+    <a href="{% url 'blog:products' %}" class="post-back">
+      <span class="arrow-back">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </span>
+      <span class="tr" data-en="All products" data-uz="Barcha mahsulotlar">{% tr "All products" "Barcha mahsulotlar" %}</span>
+    </a>
+
+    <div class="eyebrow" style="margin-bottom:14px;">
+      <span class="tr" data-en="{{ product.kind_en }}" data-uz="{{ product.kind_uz }}">{% bi product "kind" %}</span>
+      ·
+      <span class="tr" data-en="{{ product.price_en }}" data-uz="{{ product.price_uz|default:product.price_en }}">{% bi product "price" %}</span>
+    </div>
+
+    <h1 class="post-article__title">
+      <span class="tr" data-en="{{ product.name_en }}" data-uz="{{ product.name_uz }}">{% bi product "name" %}</span>
+    </h1>
+
+    <p class="post-article__dek">
+      <span class="tr" data-en="{{ product.blurb_en }}" data-uz="{{ product.blurb_uz }}">{% bi product "blurb" %}</span>
+    </p>
+
+    <!-- Bullets -->
+    <ul class="product-card__bullets" style="margin:24px 0 32px;">
+      {% for b in product.bullets.all %}
+      <li class="product-card__bullet" style="font-size:16px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        <span class="tr" data-en="{{ b.text_en }}" data-uz="{{ b.text_uz }}">{% bi b "text" %}</span>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <div style="margin-bottom:40px;">
+      <button class="btn btn--accent btn--lg" onclick="showToast('{{ product.cta_en }} — coming soon!')">
+        <span class="tr" data-en="{{ product.cta_en }}" data-uz="{{ product.cta_uz }}">{% bi product "cta" %}</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <!-- Full content -->
+    <div class="post-article__body">
+      {% if LANG == 'uz' and product.content_uz %}
+        {{ product.content_uz|safe }}
+      {% else %}
+        {{ product.content_en|safe }}
+      {% endif %}
+    </div>
+
+    <!-- CTA at bottom -->
+    <div style="margin-top:48px;padding:28px;background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius-md);text-align:center;">
+      <h3 style="font-size:22px;font-weight:600;margin:0 0 8px;">
+        <span class="tr" data-en="Ready to get started?" data-uz="Boshlashga tayyormisiz?">{% tr "Ready to get started?" "Boshlashga tayyormisiz?" %}</span>
+      </h3>
+      <p style="font-size:15px;color:var(--fg-muted);margin:0 0 20px;">
+        <span class="tr" data-en="{{ product.blurb_en }}" data-uz="{{ product.blurb_uz }}">{% bi product "blurb" %}</span>
+      </p>
+      <button class="btn btn--primary btn--lg" onclick="showToast('{{ product.cta_en }} — coming soon!')">
+        <span class="tr" data-en="{{ product.cta_en }}" data-uz="{{ product.cta_uz }}">{% bi product "cta" %}</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </article>
+</div>
+{% endblock %}

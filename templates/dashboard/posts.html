@@ -1,0 +1,54 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Posts{% endblock %}
+{% block topbar_title %}Posts{% endblock %}
+{% block topbar_actions %}<a href="{% url 'dashboard:post_create' %}" class="btn btn--primary btn--sm">+ New Post</a>{% endblock %}
+
+{% block content %}
+<div class="dash-card">
+  <div class="dash-card__body">
+    {% if posts %}
+    <table class="dash-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Date</th>
+          <th>Tag</th>
+          <th>Read</th>
+          <th>Status</th>
+          <th style="width:140px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+        <tr>
+          <td><strong>{{ post.title_en }}</strong></td>
+          <td style="color:var(--fg-muted);white-space:nowrap;">{{ post.date|date:"M d, Y" }}</td>
+          <td><span class="dash-badge">{{ post.tag }}</span></td>
+          <td>{{ post.read_time }} min</td>
+          <td>
+            {% if post.featured %}<span class="dash-badge dash-badge--success">Featured</span>{% else %}<span class="dash-badge">Draft</span>{% endif %}
+          </td>
+          <td>
+            <div style="display:flex;gap:4px;justify-content:flex-end;">
+              <a href="{% url 'dashboard:post_edit' post.pk %}" class="btn btn--ghost btn--sm">Edit</a>
+              <form method="post" action="{% url 'dashboard:post_delete' post.pk %}" onsubmit="return confirm('Delete this post?')" style="margin:0;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn--ghost btn--sm" style="color:var(--danger-500);">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="dash-empty">
+      <div class="dash-empty__title">No posts yet</div>
+      <div class="dash-empty__desc">Create your first post to get started.</div>
+      <a href="{% url 'dashboard:post_create' %}" class="btn btn--primary" style="margin-top:16px;">+ New Post</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

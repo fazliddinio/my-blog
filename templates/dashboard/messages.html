@@ -1,0 +1,46 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Messages{% endblock %}
+{% block topbar_title %}Messages {% if unread_count %}<span class="dash-badge dash-badge--warning" style="font-size:12px;vertical-align:middle;">{{ unread_count }} unread</span>{% endif %}{% endblock %}
+
+{% block content %}
+<div class="dash-messages">
+  {% if messages_list %}
+  {% for msg in messages_list %}
+  <div class="dash-message {% if not msg.is_read %}dash-message--unread{% endif %}">
+    <div class="dash-message__indicator"></div>
+    <div class="dash-message__body">
+      <div class="dash-message__sender">
+        <span class="dash-message__email">{{ msg.email }}</span>
+        <span class="dash-message__date">{{ msg.created_at|date:"M d, Y · H:i" }}</span>
+        {% if msg.is_read %}<span class="dash-badge dash-badge--success" style="margin-left:8px;">Read</span>
+        {% else %}<span class="dash-badge dash-badge--warning" style="margin-left:8px;">New</span>{% endif %}
+      </div>
+      <div class="dash-message__preview">{{ msg.message|linebreaksbr }}</div>
+      <div style="display:flex;gap:8px;margin-top:12px;">
+        {% if not msg.is_read %}
+        <form method="post" action="{% url 'dashboard:message_read' msg.pk %}" style="margin:0;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn--secondary btn--sm">Mark as read</button>
+        </form>
+        {% endif %}
+        <form method="post" action="{% url 'dashboard:message_delete' msg.pk %}" onsubmit="return confirm('Delete this message?')" style="margin:0;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn--ghost btn--sm" style="color:var(--danger-500);">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="dash-card">
+    <div class="dash-card__body">
+      <div class="dash-empty">
+        <div class="dash-empty__title">No messages yet</div>
+        <div class="dash-empty__desc">Messages from the contact form will appear here.</div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
