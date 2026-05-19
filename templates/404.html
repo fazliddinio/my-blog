@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n_tags %}
+
+{% block title %}{% tr "Page not found" "Sahifa topilmadi" %} — fazliddin.com{% endblock %}
+
+{% block content %}
+<div class="page-wrapper page-wrapper--narrow error-page">
+  <div class="error-code">404</div>
+  <h1 class="error-title">{% tr "This page doesn't exist." "Bu sahifa mavjud emas." %}</h1>
+  <p class="error-lead">
+    {% tr "Maybe it moved, or the link is old. Try one of these instead." "Ehtimol ko'chirilgan yoki havola eskirgan. Bularni sinab ko'ring." %}
+  </p>
+  <div class="error-actions">
+    <a href="{% url 'blog:home' %}" class="btn btn--primary">{% tr "Home" "Bosh sahifa" %}</a>
+    <a href="{% url 'blog:blog_list' %}" class="btn btn--secondary">{% tr "All posts" "Barcha maqolalar" %}</a>
+    <a href="{% url 'blog:search' %}" class="btn btn--ghost">{% tr "Search" "Qidirish" %}</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,53 +1,44 @@
 {% extends "base.html" %}
 {% load i18n_tags %}
 
-{% block title %}{% tr "Newsletter" "Yangiliklar" %} — fazliddin.com{% endblock %}
+{% block title %}{% tr "Newsletter" "Email xabar" %} — fazliddin.com{% endblock %}
+{% block og_title %}{% tr "Newsletter" "Email xabar" %} — fazliddin.com{% endblock %}
 
 {% block content %}
-{% get_lang as LANG %}
 <div class="page-wrapper page-wrapper--narrow">
-  <div class="page-header">
-    <div class="eyebrow" style="margin-bottom:14px;">
-      <span class="tr" data-en="Email list" data-uz="Pochta ro'yxati">{% tr "Email list" "Pochta ro'yxati" %}</span>
-    </div>
+  <header class="page-header">
+    <div class="eyebrow" style="margin-bottom:14px;">{% tr "Stay in the loop" "Xabardor bo'ling" %}</div>
     <h1 class="page-header__title">
-      <span class="tr" data-en="One email a month. Unsubscribe whenever." data-uz="Oyiga bitta xat. Istalgan vaqtda obunani bekor qiling.">{% tr "One email a month. Unsubscribe whenever." "Oyiga bitta xat. Istalgan vaqtda obunani bekor qiling." %}</span>
+      {% tr "One email per month." "Oyiga bir xabar." %}
     </h1>
     <p class="page-header__lead">
-      <span class="tr" data-en="What I shipped, what I read, and one thing I'm thinking about. Sent on the first Monday. Roughly 2,400 readers." data-uz="Nimani yetkazganim, nimani o'qiganim va o'ylab yurgan bir narsa. Har oyning birinchi dushanbasida yuboriladi. Taxminan 2 400 o'quvchi.">{% tr "What I shipped, what I read, and one thing I'm thinking about. Sent on the first Monday. Roughly 2,400 readers." "Nimani yetkazganim, nimani o'qiganim va o'ylab yurgan bir narsa. Har oyning birinchi dushanbasida yuboriladi. Taxminan 2 400 o'quvchi." %}</span>
+      {% tr "What I'm building, what I shipped, and early access to new products." "Nima ustida ishlayapman, nima chiqardim va yangi mahsulotlarga erta kirish." %}
     </p>
-  </div>
+  </header>
 
-  <form class="newsletter-form newsletter-form--compact" id="newsletterForm" method="post" action="{% url 'blog:subscribe' %}">
+  <form class="newsletter-form newsletter-form--compact" id="newsletterForm" method="post" action="{% url 'blog:subscribe' %}" novalidate>
     {% csrf_token %}
-    <input type="email" name="email" placeholder="you@gmail.com" required>
-    <button type="submit" class="btn btn--primary">
-      <span class="tr" data-en="Subscribe" data-uz="Obuna bo'lish">{% tr "Subscribe" "Obuna bo'lish" %}</span>
-    </button>
+    <label class="visually-hidden" for="nl-email">{% tr "Email" "Email" %}</label>
+    <input id="nl-email" type="email" name="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required maxlength="254">
+    <input type="text" name="website" tabindex="-1" autocomplete="off" class="hp-field" aria-hidden="true">
+    <button type="submit" class="btn btn--primary">{% tr "Subscribe" "Obuna bo'lish" %}</button>
   </form>
 
-  <!-- Recent Issues -->
-  <div style="margin-top:56px;">
-    <h3 class="uses-section__title">
-      <span class="tr" data-en="Recent issues" data-uz="So'nggi sonlar">{% tr "Recent issues" "So'nggi sonlar" %}</span>
-    </h3>
+  {% if issues %}
+  <section style="margin-top:56px;">
+    <h2 class="uses-section__title">{% tr "Past issues" "Oldingi sonlar" %}</h2>
     <div>
       {% for issue in issues %}
       <a href="{% url 'blog:newsletter_issue' issue.number %}" class="issue-row">
-        <span class="issue-row__number">
-          <span class="tr" data-en="Issue #{{ issue.number }}" data-uz="#{{ issue.number }}-son">{% tr "Issue #" "#" %}{{ issue.number }}{% if LANG == 'uz' %}-son{% endif %}</span>
-        </span>
-        <span class="issue-row__date">
-          <span class="tr" data-en="{{ issue.date_en }}" data-uz="{{ issue.date_uz }}">{% bi issue "date" %}</span>
-        </span>
-        <span class="issue-row__title">
-          <span class="tr" data-en="{{ issue.title_en }}" data-uz="{{ issue.title_uz }}">{% bi issue "title" %}</span>
-        </span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        <span class="issue-row__number">{% tr "Issue" "Son" %} #{{ issue.number }}</span>
+        <span class="issue-row__date">{% bi issue "date" %}</span>
+        <span class="issue-row__title">{% bi issue "title" %}</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
       </a>
       {% endfor %}
       <div class="divider"></div>
     </div>
-  </div>
+  </section>
+  {% endif %}
 </div>
 {% endblock %}

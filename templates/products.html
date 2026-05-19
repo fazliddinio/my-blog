@@ -2,53 +2,78 @@
 {% load i18n_tags %}
 
 {% block title %}{% tr "Products" "Mahsulotlar" %} — fazliddin.com{% endblock %}
+{% block meta_description %}{% tr "Digital products for engineers: courses, tools, and guides I built and use myself." "Dasturchilar uchun onlayn mahsulotlar: o'zim yaratgan va ishlatadigan kurslar va vositalar." %}{% endblock %}
+{% block og_title %}{% tr "Products" "Mahsulotlar" %} — fazliddin.com{% endblock %}
 
 {% block content %}
-{% get_lang as LANG %}
 <div class="page-wrapper">
-  <div class="page-header">
-    <div class="eyebrow" style="margin-bottom:14px;">
-      <span class="tr" data-en="For sale" data-uz="Sotuvda">{% tr "For sale" "Sotuvda" %}</span>
-    </div>
-    <h1 class="page-header__title">
-      <span class="tr" data-en="Things I made that you can buy." data-uz="Men yaratgan, sotib olishingiz mumkin bo'lgan narsalar.">{% tr "Things I made that you can buy." "Men yaratgan, sotib olishingiz mumkin bo'lgan narsalar." %}</span>
-    </h1>
+  <header class="page-header page-header--commercial">
+    <div class="eyebrow" style="margin-bottom:14px;">{% tr "Digital products" "Onlayn mahsulotlar" %}</div>
+    <h1 class="page-header__title">{% tr "Tools I built because I needed them." "O'zimga kerak bo'lgani uchun yaratdim." %}</h1>
     <p class="page-header__lead">
-      <span class="tr" data-en="A course, a tool, and a small book. Each one started as something I wanted for myself." data-uz="Bir kurs, bir vosita va kichik kitob. Har biri o'zim uchun xohlagan narsa sifatida boshlangan.">{% tr "A course, a tool, and a small book. Each one started as something I wanted for myself." "Bir kurs, bir vosita va kichik kitob. Har biri o'zim uchun xohlagan narsa sifatida boshlangan." %}</span>
+      {% tr "Every product started on a real project. Pay once, use forever — no subscriptions." "Har biri haqiqiy loyihadan boshlangan. Bir marta to'lang, abadiy foydalaning — obuna yo'q." %}
     </p>
-  </div>
+  </header>
 
   <div class="products-grid">
     {% for p in products %}
-    <div class="product-card">
+    <article class="product-card product-card--commercial">
       <div class="product-card__header">
-        <span class="eyebrow tr" data-en="{{ p.kind_en }}" data-uz="{{ p.kind_uz }}">{% bi p "kind" %}</span>
-        <span class="product-card__price">
-          <span class="tr" data-en="{{ p.price_en }}" data-uz="{{ p.price_uz|default:p.price_en }}">{% bi p "price" %}</span>
-        </span>
+        <span class="eyebrow">{% bi p "kind" %}</span>
+        <span class="product-card__price product-card__price--prominent">{% bi p "price" %}</span>
       </div>
-      <h3 class="product-card__title">
-        <span class="tr" data-en="{{ p.name_en }}" data-uz="{{ p.name_uz }}">{% bi p "name" %}</span>
-      </h3>
-      <p class="product-card__blurb">
-        <span class="tr" data-en="{{ p.blurb_en }}" data-uz="{{ p.blurb_uz }}">{% bi p "blurb" %}</span>
-      </p>
+      <h3 class="product-card__title">{% bi p "name" %}</h3>
+      <p class="product-card__blurb">{% bi p "blurb" %}</p>
       <ul class="product-card__bullets">
         {% for b in p.bullets.all %}
         <li class="product-card__bullet">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-          <span class="tr" data-en="{{ b.text_en }}" data-uz="{{ b.text_uz }}">{% bi b "text" %}</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          {% bi b "text" %}
         </li>
         {% endfor %}
       </ul>
-      <div style="margin-top:6px;">
-        <a href="{% url 'blog:product_detail' p.slug %}" class="btn btn--primary">
-          <span class="tr" data-en="{{ p.cta_en }}" data-uz="{{ p.cta_uz }}">{% bi p "cta" %}</span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      <div class="product-card__actions">
+        <a href="{% url 'blog:product_detail' p.slug %}" class="btn btn--secondary">
+          {% tr "Details" "Batafsil" %}
         </a>
+        {% if p.checkout_url %}
+        <a href="{{ p.checkout_url }}" class="btn btn--accent" target="_blank" rel="noopener noreferrer">
+          {% bi p "cta" %}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        {% else %}
+        <a href="{% url 'blog:product_detail' p.slug %}" class="btn btn--accent">
+          {% bi p "cta" %}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        {% endif %}
       </div>
+    </article>
+    {% empty %}
+    <div class="empty-state">
+      <p>{% tr "Coming soon — join the newsletter for early access." "Tez orada — erta kirish uchun email ro'yxatiga qo'shiling." %}</p>
+      <a href="{% url 'blog:newsletter' %}" class="btn btn--accent" style="margin-top:16px;">
+        {% tr "Subscribe" "Obuna bo'lish" %}
+      </a>
     </div>
     {% endfor %}
   </div>
+
+  {% if products %}
+  <aside class="products-trust">
+    <div class="products-trust__item">
+      <strong>{% tr "Pay once" "Bir marta to'lov" %}</strong>
+      <span>{% tr "Lifetime access, no subscriptions" "Doimiy kirish, obuna yo'q" %}</span>
+    </div>
+    <div class="products-trust__item">
+      <strong>{% tr "Battle-tested" "Sinovdan o'tgan" %}</strong>
+      <span>{% tr "Used on my own projects first" "Avval o'z loyihalarimda ishlatilgan" %}</span>
+    </div>
+    <div class="products-trust__item">
+      <strong>{% tr "Questions?" "Savol bormi?" %}</strong>
+      <span><a href="{% url 'blog:hire_me' %}#contact">{% tr "Email me" "Yozing" %}</a></span>
+    </div>
+  </aside>
+  {% endif %}
 </div>
 {% endblock %}

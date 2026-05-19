@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n_tags blog_tags %}
+
+{% block title %}{% tr "Now" "Hozir" %} — fazliddin.com{% endblock %}
+{% block og_title %}{% tr "Now" "Hozir" %} — fazliddin.com{% endblock %}
+
+{% block content %}
+<div class="page-wrapper page-wrapper--narrow">
+  <header class="page-header">
+    <div class="eyebrow" style="margin-bottom:14px;">
+      {% tr "Updated" "Yangilangan" %} · <time datetime="{{ now_page.updated_at|date:'Y-m-d' }}">{{ now_page.updated_at|date:"Y-m-d" }}</time>
+    </div>
+    <h1 class="page-header__title">{% tr "What I'm doing now" "Hozir nima qilyapman" %}</h1>
+    <p class="page-header__lead">
+      {% tr "A short snapshot of my current focus — updated when things change." "Hozirgi e'tiborim qayerdaligi — o'zgarganda yangilanadi." %}
+      <a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer" class="muted-link">{% tr "What's a /now page?" "/now sahifasi nima?" %}</a>
+    </p>
+  </header>
+  <div class="post-article__body">
+    {% if IS_UZ and now_page.content_uz %}
+      {{ now_page.content_uz|render_markdown_or_html:now_page.content_format }}
+    {% elif now_page.content_en %}
+      {{ now_page.content_en|render_markdown_or_html:now_page.content_format }}
+    {% else %}
+      <p class="muted">{% tr "Nothing here yet — check back soon." "Hozircha bo'sh — tez orada qayting." %}</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

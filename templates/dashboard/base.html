@@ -59,6 +59,9 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               Timeline
             </a>
+            <a href="{% url 'dashboard:now_edit' %}" class="dash-nav__link {% if request.resolver_match.url_name == 'now_edit' %}active{% endif %}">Now</a>
+            <a href="{% url 'dashboard:testimonials' %}" class="dash-nav__link {% if 'testimonial' in request.resolver_match.url_name %}active{% endif %}">Testimonials</a>
+            <a href="{% url 'dashboard:site_settings' %}" class="dash-nav__link {% if request.resolver_match.url_name == 'site_settings' %}active{% endif %}">Settings</a>
           </div>
 
           <div class="dash-nav__section">
@@ -75,7 +78,10 @@
           <div class="dash-sidebar__avatar">{{ request.user.username|first|upper }}</div>
           <span class="dash-sidebar__username">{{ request.user.username }}</span>
         </div>
-        <a href="{% url 'dashboard:logout' %}" class="dash-sidebar__logout">Logout</a>
+        <form method="post" action="{% url 'dashboard:logout' %}" style="margin:0;">
+          {% csrf_token %}
+          <button type="submit" class="dash-sidebar__logout">Logout</button>
+        </form>
       </div>
     </aside>
 

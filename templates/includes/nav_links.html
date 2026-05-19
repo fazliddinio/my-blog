@@ -1,0 +1,15 @@
+{% load i18n_tags %}
+{% with name=request.resolver_match.url_name %}
+<a href="{% url 'blog:hire_me' %}" class="{% if name == 'hire_me' %}active{% endif %}">
+  <span>{% tr "Services" "Xizmatlar" %}</span>
+</a>
+<a href="{% url 'blog:products' %}" class="{% if name == 'products' or name == 'product_detail' %}active{% endif %}">
+  <span>{% tr "Products" "Mahsulotlar" %}</span>
+</a>
+<a href="{% url 'blog:blog_list' %}" class="{% if name == 'blog_list' or name == 'post_detail' or name == 'tag_list' %}active{% endif %}">
+  <span>{% tr "Blog" "Blog" %}</span>
+</a>
+<a href="{% url 'blog:about' %}" class="{% if name == 'about' or name == 'now' or name == 'projects' or name == 'uses' %}active{% endif %}">
+  <span>{% tr "About" "Haqimda" %}</span>
+</a>
+{% endwith %}

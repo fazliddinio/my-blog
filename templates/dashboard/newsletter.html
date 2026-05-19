@@ -13,15 +13,17 @@
   <div class="dash-card__body">
     {% if issues %}
     <table class="dash-table">
-      <thead><tr><th>#</th><th>Date</th><th>Title</th><th style="width:140px;"></th></tr></thead>
+      <thead><tr><th>#</th><th>Date</th><th>Title</th><th>Sent</th><th style="width:200px;"></th></tr></thead>
       <tbody>
         {% for issue in issues %}
         <tr>
           <td><strong>#{{ issue.number }}</strong></td>
           <td style="color:var(--fg-muted);">{{ issue.date_en }}</td>
           <td>{{ issue.title_en|truncatewords:12 }}</td>
+          <td>{% if issue.sent_at %}<span class="dash-badge dash-badge--success">{{ issue.sent_at|date:"M d" }}</span>{% else %}<span class="dash-badge">Draft</span>{% endif %}</td>
           <td>
-            <div style="display:flex;gap:4px;justify-content:flex-end;">
+            <div style="display:flex;gap:4px;justify-content:flex-end;flex-wrap:wrap;">
+              <form method="post" action="{% url 'dashboard:issue_send' issue.pk %}" style="margin:0;" onsubmit="return confirm('Send to all confirmed subscribers?')">{% csrf_token %}<button type="submit" class="btn btn--primary btn--sm">Send</button></form>
               <a href="{% url 'dashboard:issue_edit' issue.pk %}" class="btn btn--ghost btn--sm">Edit</a>
               <form method="post" action="{% url 'dashboard:issue_delete' issue.pk %}" onsubmit="return confirm('Delete?')" style="margin:0;">{% csrf_token %}<button type="submit" class="btn btn--ghost btn--sm" style="color:var(--danger-500);">Delete</button></form>
             </div>
@@ -44,12 +46,13 @@
   <div class="dash-card__body">
     {% if subscribers %}
     <table class="dash-table">
-      <thead><tr><th>Email</th><th>Subscribed</th><th>Status</th><th style="width:140px;"></th></tr></thead>
+      <thead><tr><th>Email</th><th>Subscribed</th><th>Confirmed</th><th>Status</th><th style="width:140px;"></th></tr></thead>
       <tbody>
         {% for sub in subscribers %}
         <tr>
           <td>{{ sub.email }}</td>
           <td style="color:var(--fg-muted);">{{ sub.subscribed_at|date:"M d, Y" }}</td>
+          <td>{% if sub.confirmed %}<span class="dash-badge dash-badge--success">Yes</span>{% else %}<span class="dash-badge dash-badge--warning">Pending</span>{% endif %}</td>
           <td>
             <form method="post" action="{% url 'dashboard:subscriber_toggle' sub.pk %}" style="margin:0;">
               {% csrf_token %}

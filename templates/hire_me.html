@@ -1,104 +1,125 @@
 {% extends "base.html" %}
 {% load i18n_tags %}
 
-{% block title %}{% tr "Hire me" "Yollang" %} — fazliddin.com{% endblock %}
+{% block title %}{% tr "Work with me" "Hamkorlik" %} — fazliddin.com{% endblock %}
+{% block meta_description %}{% tr "Consulting for early-stage teams: architecture reviews, hiring help, and mentoring. Limited slots." "Boshlang'ich jamoalar uchun maslahat: tizim tahlili, dasturchi tanlash va mentorlik." %}{% endblock %}
+{% block og_title %}{% tr "Work with me" "Hamkorlik" %} — fazliddin.com{% endblock %}
 
 {% block content %}
-{% get_lang as LANG %}
 <div class="page-wrapper page-wrapper--narrow">
-  <div class="page-header">
-    <div class="eyebrow" style="margin-bottom:14px;">
-      <span class="tr" data-en="Available" data-uz="Mavjud">{% tr "Available" "Mavjud" %}</span>
-    </div>
+  <header class="page-header page-header--commercial">
+    <div class="eyebrow" style="margin-bottom:14px;">{% tr "Open for projects" "Loyihalar qabul qilinmoqda" %}</div>
     <h1 class="page-header__title">
-      <span class="tr" data-en="I take on a small amount of consulting work." data-uz="Men kichik miqdordagi konsalting ishlarini olaman.">{% tr "I take on a small amount of consulting work." "Men kichik miqdordagi konsalting ishlarini olaman." %}</span>
+      {% tr "I work with a few teams each year." "Yiliga bir necha jamoa bilan ishlayman." %}
     </h1>
     <p class="page-header__lead">
-      <span class="tr" data-en="Three to four engagements a year, mostly with early-stage teams. If your problem sounds like one of these, email me." data-uz="Yiliga uch-to'rt loyiha, asosan boshlang'ich bosqichdagi jamoalar bilan. Muammoyingiz bularning biriga o'xshasa, menga yozing.">{% tr "Three to four engagements a year, mostly with early-stage teams. If your problem sounds like one of these, email me." "Yiliga uch-to'rt loyiha, asosan boshlang'ich bosqichdagi jamoalar bilan. Muammoyingiz bularning biriga o'xshasa, menga yozing." %}</span>
+      {% tr "For early-stage teams that need a senior engineer — without a full-time hire. Focused work, honest advice." "Katta dasturchi kerak, lekin to'liq stavkaga hali tayyor emassiz — aynan shu holatlar uchun. Aniq ish, samimiy maslahat." %}
     </p>
-  </div>
-
-  <div style="display:grid;gap:14px;margin-bottom:48px;">
-    <!-- Service 1 -->
-    <div class="service-card">
-      <div>
-        <div class="service-card__header">
-          <h3 class="service-card__title">
-            <span class="tr" data-en="Architecture review" data-uz="Arxitektura tahlili">{% tr "Architecture review" "Arxitektura tahlili" %}</span>
-          </h3>
-          <span class="pill">
-            <span class="tr" data-en="1 week" data-uz="1 hafta">{% tr "1 week" "1 hafta" %}</span>
-          </span>
-        </div>
-        <p class="service-card__desc">
-          <span class="tr" data-en="I read your code, your logs, and your roadmap. You get a written report and a 90-minute call." data-uz="Kodingizni, loglaringizni va yo'l xaritangizni o'qiyman. Yozma hisobot va 90 daqiqalik qo'ng'iroq olasiz.">{% tr "I read your code, your logs, and your roadmap. You get a written report and a 90-minute call." "Kodingizni, loglaringizni va yo'l xaritangizni o'qiyman. Yozma hisobot va 90 daqiqalik qo'ng'iroq olasiz." %}</span>
-        </p>
-      </div>
-      <a href="#contact" class="btn btn--secondary" onclick="document.getElementById('contactForm').querySelector('input').focus()">
-        <span class="tr" data-en="Book a call" data-uz="Qo'ng'iroq belgilash">{% tr "Book a call" "Qo'ng'iroq belgilash" %}</span>
+    <div class="page-header__actions">
+      <a href="#contact" class="btn btn--accent btn--lg">
+        {% tr "Get in touch" "Bog'lanish" %}
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
+      {% if calendly_url %}
+      <a href="#book" class="btn btn--secondary btn--lg">{% tr "Book a call" "Uchrashuv belgilash" %}</a>
+      {% endif %}
     </div>
+  </header>
 
-    <!-- Service 2 -->
-    <div class="service-card">
-      <div>
-        <div class="service-card__header">
-          <h3 class="service-card__title">
-            <span class="tr" data-en="Hire-the-first-engineer" data-uz="Birinchi muhandisni yollash">{% tr "Hire-the-first-engineer" "Birinchi muhandisni yollash" %}</span>
-          </h3>
-          <span class="pill">
-            <span class="tr" data-en="3 weeks" data-uz="3 hafta">{% tr "3 weeks" "3 hafta" %}</span>
-          </span>
+  {% if testimonials %}
+  <section class="section proof-section">
+    <h2 class="section__title">{% tr "What clients say" "Mijozlar fikri" %}</h2>
+    <div class="testimonials-grid">
+      {% for t in testimonials %}
+      <blockquote class="testimonial-card">
+        <p class="testimonial-card__quote">"{% if IS_UZ and t.quote_uz %}{{ t.quote_uz }}{% else %}{{ t.quote_en }}{% endif %}"</p>
+        <footer class="testimonial-card__author">
+          <strong>{{ t.name }}</strong>
+          <span class="muted">{% if IS_UZ and t.role_uz %}{{ t.role_uz }}{% else %}{{ t.role_en }}{% endif %}</span>
+        </footer>
+      </blockquote>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="section">
+    <h2 class="section__title">{% tr "Services" "Xizmatlar" %}</h2>
+    <div class="services">
+      <div class="service-card service-card--commercial">
+        <div>
+          <div class="service-card__header">
+            <h3 class="service-card__title">{% tr "Architecture review" "Tizim tahlili" %}</h3>
+            <span class="pill">{% tr "1 week" "1 hafta" %}</span>
+          </div>
+          <p class="service-card__price">{% tr "From $2,500" "$2,500 dan" %}</p>
+          <p class="service-card__desc">
+            {% tr "I review your code, logs, and roadmap. You get a written report and a 90-minute call." "Kodingiz, loglar va rejangizni ko'rib chiqaman. Yozma hisobot va 90 daqiqalik suhbat olasiz." %}
+          </p>
         </div>
-        <p class="service-card__desc">
-          <span class="tr" data-en="I help you write the JD, screen candidates, and run the technical loop. Optionally I stay on for the first month." data-uz="Lavozim tavsifini yozish, nomzodlarni saralash va texnik bosqichni o'tkazishda yordam beraman. Birinchi oy davomida qolishim ham mumkin.">{% tr "I help you write the JD, screen candidates, and run the technical loop. Optionally I stay on for the first month." "Lavozim tavsifini yozish, nomzodlarni saralash va texnik bosqichni o'tkazishda yordam beraman. Birinchi oy davomida qolishim ham mumkin." %}</span>
-        </p>
+        <a href="#contact" class="btn btn--accent">{% tr "Get started" "Buyurtma berish" %}</a>
       </div>
-      <a href="#contact" class="btn btn--secondary" onclick="document.getElementById('contactForm').querySelector('input').focus()">
-        <span class="tr" data-en="Book a call" data-uz="Qo'ng'iroq belgilash">{% tr "Book a call" "Qo'ng'iroq belgilash" %}</span>
-      </a>
-    </div>
 
-    <!-- Service 3 -->
-    <div class="service-card">
-      <div>
-        <div class="service-card__header">
-          <h3 class="service-card__title">
-            <span class="tr" data-en="Mentoring" data-uz="Mentorlik">{% tr "Mentoring" "Mentorlik" %}</span>
-          </h3>
-          <span class="pill">
-            <span class="tr" data-en="Ongoing" data-uz="Davomli">{% tr "Ongoing" "Davomli" %}</span>
-          </span>
+      <div class="service-card service-card--commercial">
+        <div>
+          <div class="service-card__header">
+            <h3 class="service-card__title">{% tr "Hire your first engineer" "Birinchi dasturchi" %}</h3>
+            <span class="pill">{% tr "3 weeks" "3 hafta" %}</span>
+          </div>
+          <p class="service-card__price">{% tr "From $5,000" "$5,000 dan" %}</p>
+          <p class="service-card__desc">
+            {% tr "Job description, candidate screening, and technical interviews. I can stay on for the first month." "Lavozim tavsifi, nomzodlar saralashi va texnik suhbatlar. Birinchi oy yordam berishim mumkin." %}
+          </p>
         </div>
-        <p class="service-card__desc">
-          <span class="tr" data-en="Two 45-minute calls a month for engineers who want a sounding board. Limited slots." data-uz="O'z fikrini sinab ko'rmoqchi bo'lgan muhandislar uchun oyiga ikkita 45 daqiqalik qo'ng'iroq. Joy cheklangan.">{% tr "Two 45-minute calls a month for engineers who want a sounding board. Limited slots." "O'z fikrini sinab ko'rmoqchi bo'lgan muhandislar uchun oyiga ikkita 45 daqiqalik qo'ng'iroq. Joy cheklangan." %}</span>
-        </p>
+        <a href="#contact" class="btn btn--accent">{% tr "Get started" "Buyurtma berish" %}</a>
       </div>
-      <a href="#contact" class="btn btn--secondary" onclick="document.getElementById('contactForm').querySelector('input').focus()">
-        <span class="tr" data-en="Book a call" data-uz="Qo'ng'iroq belgilash">{% tr "Book a call" "Qo'ng'iroq belgilash" %}</span>
-      </a>
-    </div>
-  </div>
 
-  <!-- Contact Form -->
-  <div class="contact-box" id="contact">
-    <div class="eyebrow" style="margin-bottom:12px;">
-      <span class="tr" data-en="Send a note" data-uz="Xat yuboring">{% tr "Send a note" "Xat yuboring" %}</span>
+      <div class="service-card service-card--commercial">
+        <div>
+          <div class="service-card__header">
+            <h3 class="service-card__title">{% tr "Mentoring" "Mentorlik" %}</h3>
+            <span class="pill">{% tr "Ongoing" "Doimiy" %}</span>
+          </div>
+          <p class="service-card__price">{% tr "$800 / month" "Oyiga $800" %}</p>
+          <p class="service-card__desc">
+            {% tr "Two 45-minute calls a month. For engineers who want a senior sounding board." "Oyiga ikkita 45 daqiqalik qo'ng'iroq. Tajribali maslahatchi kerak bo'lgan dasturchilar uchun." %}
+          </p>
+        </div>
+        <a href="#contact" class="btn btn--accent">{% tr "Get started" "Buyurtma berish" %}</a>
+      </div>
     </div>
-    <p style="margin:0 0 18px;font-size:15px;color:var(--fg-muted);">
-      <span class="tr" data-en="Email me. I read everything. Replies typically within two days." data-uz="Menga yozing. Hammasini o'qiyman. Odatda ikki kun ichida javob beraman.">{% tr "Email me. I read everything. Replies typically within two days." "Menga yozing. Hammasini o'qiyman. Odatda ikki kun ichida javob beraman." %}</span>
+  </section>
+
+  {% if calendly_url %}
+  <section class="section calendly-section" id="book">
+    <h2 class="section__title">{% tr "Book a call" "Uchrashuv belgilash" %}</h2>
+    <p class="section__lead">{% tr "Pick a 30-minute slot. No commitment — just a chat about your project." "30 daqiqa tanlang. Hech qanday majburiyat yo'q — faqat loyiha haqida suhbat." %}</p>
+    <div class="calendly-embed">
+      <iframe src="{{ calendly_url }}" title="Schedule a call" loading="lazy"></iframe>
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="contact-box contact-box--commercial" id="contact">
+    <div class="eyebrow" style="margin-bottom:12px;">{% tr "Contact" "Aloqa" %}</div>
+    <h2 class="contact-box__title">{% tr "Tell me about your project" "Loyihangizni qisqacha yozing" %}</h2>
+    <p class="contact-box__lead">
+      {% tr "What you're building and where you're stuck. I read every message and reply within two business days." "Nima qilyapsiz va qayerda qotib qoldingiz. Har bir xabarni o'qiyman va ikki ish kuni ichida javob beraman." %}
     </p>
-    <form class="contact-form" id="contactForm" method="post" action="{% url 'blog:contact' %}">
+    <form class="contact-form" id="contactForm" method="post" action="{% url 'blog:contact' %}" novalidate>
       {% csrf_token %}
-      <input type="email" name="email" placeholder="you@gmail.com" required>
-      <textarea name="message" rows="4" placeholder="{% tr 'What are you working on?' 'Nima ustida ishlayapsiz?' %}" required></textarea>
+      <label class="visually-hidden" for="contact-email">{% tr "Email" "Email" %}</label>
+      <input id="contact-email" type="email" name="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required maxlength="254">
+      <label class="visually-hidden" for="contact-message">{% tr "Message" "Xabar" %}</label>
+      <textarea id="contact-message" name="message" rows="5" placeholder="{% tr 'What are you building?' 'Nima qilyapsiz?' %}" required minlength="10" maxlength="4000"></textarea>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" class="hp-field" aria-hidden="true">
       <div>
-        <button type="submit" class="btn btn--primary">
-          <span class="tr" data-en="Send" data-uz="Yuborish">{% tr "Send" "Yuborish" %}</span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <button type="submit" class="btn btn--accent btn--lg">
+          {% tr "Send message" "Yuborish" %}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </button>
       </div>
     </form>
-  </div>
+  </section>
 </div>
 {% endblock %}

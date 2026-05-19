@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n_tags %}
+
+{% block title %}{% tr "Confirmed" "Tasdiqlandi" %} — fazliddin.com{% endblock %}
+
+{% block content %}
+<div class="page-wrapper page-wrapper--narrow error-page">
+  <div class="error-icon" aria-hidden="true">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+  </div>
+  <h1 class="error-title">{% tr "You're subscribed!" "Obuna bo'ldingiz!" %}</h1>
+  <p class="error-lead muted">{{ email }}</p>
+  <p>{% tr "Thanks! You'll hear from me when there's something worth sharing." "Rahmat! Paylaqqadli narsa bo'lganda xabar beraman." %}</p>
+  <div class="error-actions">
+    <a href="{% url 'blog:home' %}" class="btn btn--primary">{% tr "Back home" "Bosh sahifaga" %}</a>
+    <a href="{% url 'blog:newsletter' %}" class="btn btn--ghost">{% tr "Past issues" "Oldingi sonlar" %}</a>
+  </div>
+</div>
+{% endblock %}

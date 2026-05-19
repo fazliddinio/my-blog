@@ -27,7 +27,10 @@
           <td><span class="dash-badge">{{ post.tag }}</span></td>
           <td>{{ post.read_time }} min</td>
           <td>
-            {% if post.featured %}<span class="dash-badge dash-badge--success">Featured</span>{% else %}<span class="dash-badge">Draft</span>{% endif %}
+            {% if post.status == 'published' %}<span class="dash-badge dash-badge--success">Published</span>
+            {% else %}<span class="dash-badge dash-badge--warning">Draft</span>{% endif %}
+            {% if post.featured %}<span class="dash-badge">Featured</span>{% endif %}
+            {% if not post.is_translation_complete %}<span class="dash-badge dash-badge--danger">UZ missing</span>{% endif %}
           </td>
           <td>
             <div style="display:flex;gap:4px;justify-content:flex-end;">

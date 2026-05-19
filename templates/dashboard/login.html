@@ -36,15 +36,16 @@
     {% endfor %}
     {% endif %}
 
-    <form class="login-form" method="post" action="{% url 'dashboard:login' %}">
+    <form class="login-form" method="post" action="{% url 'dashboard:login' %}" autocomplete="on">
       {% csrf_token %}
+      {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
       <div>
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" required autofocus>
+        <input type="text" id="username" name="username" autocomplete="username" required autofocus>
       </div>
       <div>
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" autocomplete="current-password" required>
       </div>
       <button type="submit" class="login-submit">Sign in</button>
     </form>

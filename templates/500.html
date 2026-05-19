@@ -1,0 +1,19 @@
+{% load static i18n_tags %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Server error — fazliddin.com</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <main class="page-wrapper page-wrapper--narrow error-page">
+    <div class="error-code">500</div>
+    <h1 class="error-title">Something went wrong on our end.</h1>
+    <p class="error-lead">It's been logged. Try again in a moment, or head back to the homepage.</p>
+    <div class="error-actions">
+      <a href="/" class="btn btn--primary">Home</a>
+    </div>
+  </main>
+</body>
+</html>

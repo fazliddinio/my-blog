@@ -16,7 +16,7 @@
     </div>
     {% endif %}
 
-    <form method="post" class="dash-form">
+    <form method="post" class="dash-form" enctype="multipart/form-data">
       {% csrf_token %}
 
       <div class="dash-form__row">
@@ -48,9 +48,39 @@
           <input type="text" name="tag" class="dash-form__input" value="{{ form.tag.value|default:'' }}" placeholder="caching, react, career..." required>
         </div>
         <div class="dash-form__group">
-          <label class="dash-form__label">Read Time (minutes) *</label>
-          <input type="number" name="read_time" class="dash-form__input" value="{{ form.read_time.value|default:'' }}" placeholder="8" required>
+          <label class="dash-form__label">Read Time (minutes)</label>
+          <input type="number" name="read_time" class="dash-form__input" value="{{ form.read_time.value|default:'' }}" placeholder="Auto-calculated">
         </div>
+      </div>
+
+      <div class="dash-form__row">
+        <div class="dash-form__group">
+          <label class="dash-form__label">Status</label>
+          {{ form.status }}
+        </div>
+        <div class="dash-form__group">
+          <label class="dash-form__label">Content format</label>
+          {{ form.content_format }}
+        </div>
+      </div>
+
+      <div class="dash-form__row">
+        <div class="dash-form__group">
+          <label class="dash-form__label">Series</label>
+          <input type="text" name="series" class="dash-form__input" value="{{ form.series.value|default:'' }}" placeholder="Optional">
+        </div>
+        <div class="dash-form__group">
+          <label class="dash-form__label">Series part #</label>
+          <input type="number" name="series_part" class="dash-form__input" value="{{ form.series_part.value|default:'' }}">
+        </div>
+      </div>
+
+      <div class="dash-form__group">
+        <label class="dash-form__label">Featured image</label>
+        <input type="file" name="featured_image" class="dash-form__input" accept="image/*">
+        {% if editing and form.instance.featured_image %}
+        <div class="dash-form__help">Current: {{ form.instance.featured_image.name }}</div>
+        {% endif %}
       </div>
 
       <div class="dash-form__row">
@@ -66,7 +96,7 @@
 
       <div class="dash-form__group">
         <label class="dash-form__label">Content (English)</label>
-        <textarea name="content_en" class="dash-form__textarea" rows="20" placeholder="Full post body — HTML supported">{{ form.content_en.value|default:'' }}</textarea>
+        <textarea name="content_en" class="dash-form__textarea" rows="20" placeholder="HTML or Markdown">{{ form.content_en.value|default:'' }}</textarea>
       </div>
 
       <div class="dash-form__group">

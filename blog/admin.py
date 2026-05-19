@@ -1,70 +1,49 @@
+"""Django-admin registrations for the blog models.
+
+The dashboard at ``/dashboard/`` is the *primary* editing surface; the
+built-in admin is kept around for super-user maintenance (bulk fixes,
+debugging, occasional one-off edits).
+"""
+
 from django.contrib import admin
+
 from .models import (
-    Post, Project, UsesCategory, UsesItem, Product, ProductBullet,
-    NewsletterSubscriber, NewsletterIssue, ContactMessage, TimelineEntry,
+    ContactMessage, NewsletterIssue, NewsletterSubscriber, NowPage,
+    Post, Product, ProductBullet, Project, SiteSettings, Testimonial,
+    TimelineEntry, UsesCategory, UsesItem,
 )
 
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title_en', 'date', 'tag', 'read_time', 'featured']
-    list_filter = ['featured', 'tag', 'date']
+    """Admin view tuned for the most common editor workflows."""
+
+    list_display = ['title_en', 'status', 'date', 'tag', 'featured']
+    list_filter = ['status', 'featured', 'tag']
     search_fields = ['title_en', 'title_uz', 'dek_en']
+    # Auto-fill the slug from the English title — editors don't usually want
+    # to think about URL slugs, and the model itself also generates one on
+    # ``save()`` if this field is left blank.
     prepopulated_fields = {'slug': ('title_en',)}
-    list_editable = ['featured']
-
-
-@admin.register(Project)
-class ProjectAdmin(admin.ModelAdmin):
-    list_display = ['name', 'language', 'stars', 'order']
-    list_editable = ['order', 'stars']
-
-
-class UsesItemInline(admin.TabularInline):
-    model = UsesItem
-    extra = 1
-
-
-@admin.register(UsesCategory)
-class UsesCategoryAdmin(admin.ModelAdmin):
-    list_display = ['title_en', 'order']
-    list_editable = ['order']
-    inlines = [UsesItemInline]
-
-
-class ProductBulletInline(admin.TabularInline):
-    model = ProductBullet
-    extra = 1
-
-
-@admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name_en', 'kind_en', 'price_en', 'order']
-    list_editable = ['order']
-    inlines = [ProductBulletInline]
 
 
 @admin.register(NewsletterSubscriber)
 class NewsletterSubscriberAdmin(admin.ModelAdmin):
-    list_display = ['email', 'subscribed_at', 'is_active']
-    list_filter = ['is_active']
+    """Subscriber list with confirmation/active flags surfaced for triage."""
+
+    list_display = ['email', 'confirmed', 'is_active', 'subscribed_at']
     search_fields = ['email']
 
 
-@admin.register(NewsletterIssue)
-class NewsletterIssueAdmin(admin.ModelAdmin):
-    list_display = ['number', 'date_en', 'title_en']
-
-
-@admin.register(ContactMessage)
-class ContactMessageAdmin(admin.ModelAdmin):
-    list_display = ['email', 'created_at', 'is_read']
-    list_filter = ['is_read']
-    list_editable = ['is_read']
-    readonly_fields = ['email', 'message', 'created_at']
-
-
-@admin.register(TimelineEntry)
-class TimelineEntryAdmin(admin.ModelAdmin):
-    list_display = ['period_en', 'description_en', 'order']
-    list_editable = ['order']
+# Models below have simple admin needs — the default ModelAdmin is fine.
+admin.site.register(Project)
+admin.site.register(UsesCategory)
+admin.site.register(UsesItem)
+admin.site.register(Product)
+admin.site.register(ProductBullet)
+admin.site.register(NewsletterIssue)
+admin.site.register(ContactMessage)
+admin.site.register(TimelineEntry)
+admin.site.register(SiteSettings)
+admin.site.register(NowPage)
+admin.site.register(Testimonial)

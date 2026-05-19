@@ -1,141 +1,215 @@
 {% extends "base.html" %}
 {% load i18n_tags %}
 
-{% block title %}fazliddin.com — {% tr "Notes on building software" "Dasturiy ta'minot haqida eslatmalar" %}{% endblock %}
+{% block title %}fazliddin.com — {% tr "Consulting, products & blogs" "Maslahat, mahsulotlar va blog" %}{% endblock %}
+{% block meta_description %}{% tr "Senior engineer helping startups ship faster — through consulting, digital products, and practical engineering blogs." "Tajribali dasturchi. Startaplar uchun maslahat, onlayn mahsulotlar va foydali bloglar." %}{% endblock %}
+{% block og_title %}fazliddin.com — {% tr "Consulting, products & blogs" "Maslahat, mahsulotlar va blog" %}{% endblock %}
 
 {% block content %}
-{% get_lang as LANG %}
 <div class="page-wrapper">
-  <!-- Hero -->
-  <section class="hero">
-    <div class="eyebrow" style="margin-bottom:18px;">
-      <span class="tr" data-en="fazliddin.com · est. 2024" data-uz="fazliddin.com · 2024 yildan">{% tr "fazliddin.com · est. 2024" "fazliddin.com · 2024 yildan" %}</span>
+  <section class="hero hero--commercial">
+    <div class="eyebrow hero__eyebrow">
+      {% tr "Senior engineer · Consultant · Builder" "Tajribali dasturchi · Maslahatchi · Yaratuvchi" %}
     </div>
     <h1 class="hero__title">
-      <span class="tr" data-en="Notes on building software, mostly." data-uz="Asosan dasturiy ta'minot yaratish haqida eslatmalar.">{% tr "Notes on building software, mostly." "Asosan dasturiy ta'minot yaratish haqida eslatmalar." %}</span>
+      {% tr "I help teams ship software that works — and sell the tools I build along the way." "Jamoalarga ishlaydigan dastur yaratishda yordam beraman. O'z vositalarimni ham sotaman." %}
     </h1>
     <p class="hero__lead">
-      <span class="tr" data-en="I'm an engineer. I write essays, ship side projects, and occasionally sell something. New here? Start with the three posts below." data-uz="Men muhandisman. Esselar yozaman, yondosh loyihalar yetkazaman va vaqti-vaqti bilan biror narsa sotaman. Yangimisiz? Quyidagi uchta postdan boshlang.">{% tr "I'm an engineer. I write essays, ship side projects, and occasionally sell something. New here? Start with the three posts below." "Men muhandisman. Esselar yozaman, yondosh loyihalar yetkazaman va vaqti-vaqti bilan biror narsa sotaman. Yangimisiz? Quyidagi uchta postdan boshlang." %}</span>
+      {% tr "14 years in backend and infrastructure. A few consulting clients a year. Products that solve real problems." "14 yillik backend va infratuzilma tajribasi. Yiliga bir necha maslahat mijozi. Haqiqiy muammolarni yechadigan mahsulotlar." %}
     </p>
     <div class="hero__actions">
-      <a href="{% url 'blog:blog_list' %}" class="btn btn--primary">
-        <span class="tr" data-en="Read the writing" data-uz="Yozuvlarni o'qish">{% tr "Read the writing" "Yozuvlarni o'qish" %}</span>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      <a href="{% url 'blog:hire_me' %}" class="btn btn--accent btn--lg">
+        {% tr "Work with me" "Bog'lanish" %}
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
-      <a href="{% url 'blog:about' %}" class="btn btn--secondary">
-        <span class="tr" data-en="About me" data-uz="Men haqimda">{% tr "About me" "Men haqimda" %}</span>
+      <a href="{% url 'blog:products' %}" class="btn btn--secondary btn--lg">
+        {% tr "See products" "Mahsulotlar" %}
+      </a>
+    </div>
+    <p class="hero__cred">
+      {% tr "Architecture reviews · Hiring help · Courses & tools" "Tizim tahlili · Dasturchi tanlash · Kurslar va vositalar" %}
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section__header">
+      <h2 class="section__title">{% tr "What I offer" "Nima taklif qilaman" %}</h2>
+    </div>
+    <div class="offer-grid">
+      <a href="{% url 'blog:hire_me' %}" class="offer-card">
+        <div class="offer-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3 class="offer-card__title">{% tr "Consulting" "Maslahat" %}</h3>
+        <p class="offer-card__desc">{% tr "Stuck on architecture, hiring, or scaling? I take on a few teams each year." "Tizim, kadrlar yoki o'sishda muammo bormi? Yiliga bir necha jamoa bilan ishlayman." %}</p>
+        <span class="offer-card__meta">{% tr "From $2,500" "$2,500 dan boshlab" %}</span>
+        <span class="offer-card__link">
+          {% tr "View services" "Xizmatlar" %}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
+      </a>
+      <a href="{% url 'blog:products' %}" class="offer-card">
+        <div class="offer-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
+        <h3 class="offer-card__title">{% tr "Products" "Mahsulotlar" %}</h3>
+        <p class="offer-card__desc">{% tr "Courses and tools I use myself — built for engineers, by an engineer." "O'zim ishlatadigan kurs va vositalar — dasturchi uchun, dasturchi tomonidan." %}</p>
+        <span class="offer-card__meta">{% tr "Pay once" "Bir martalik to'lov" %}</span>
+        <span class="offer-card__link">
+          {% tr "Browse products" "Ko'rish" %}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
+      </a>
+      <a href="{% url 'blog:blog_list' %}" class="offer-card">
+        <div class="offer-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h3 class="offer-card__title">{% tr "Blog" "Blog" %}</h3>
+        <p class="offer-card__desc">{% tr "Practical posts on backend, DevOps, and building software that lasts." "Backend, DevOps va barqaror dastur yaratish haqida foydali maqolalar." %}</p>
+        <span class="offer-card__meta">{% tr "Free" "Bepul" %}</span>
+        <span class="offer-card__link">
+          {% tr "Read the blog" "O'qish" %}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
       </a>
     </div>
   </section>
 
-  <!-- Featured -->
+  {% if testimonials %}
+  <section class="section section--sm proof-section">
+    <div class="section__header">
+      <h2 class="section__title">{% tr "What clients say" "Mijozlar fikri" %}</h2>
+    </div>
+    <div class="testimonials-grid testimonials-grid--home">
+      {% for t in testimonials %}
+      <blockquote class="testimonial-card">
+        <p class="testimonial-card__quote">"{% if IS_UZ and t.quote_uz %}{{ t.quote_uz }}{% else %}{{ t.quote_en }}{% endif %}"</p>
+        <footer class="testimonial-card__author">
+          <strong>{{ t.name }}</strong>
+          <span class="muted">{% if IS_UZ and t.role_uz %}{{ t.role_uz }}{% else %}{{ t.role_en }}{% endif %}</span>
+        </footer>
+      </blockquote>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if products %}
   <section class="section">
     <div class="section__header">
-      <h2 class="section__title">
-        <span class="tr" data-en="Featured" data-uz="Tanlangan">{% tr "Featured" "Tanlangan" %}</span>
-      </h2>
-      <a href="{% url 'blog:blog_list' %}" class="section__link">
-        <span class="tr" data-en="All posts" data-uz="Barcha yozuvlar">{% tr "All posts" "Barcha yozuvlar" %}</span>
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      <h2 class="section__title">{% tr "Products" "Mahsulotlar" %}</h2>
+      <a href="{% url 'blog:products' %}" class="section__link">
+        {% tr "View all" "Hammasi" %}
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
     </div>
-    <div class="featured-grid">
+    <div class="products-grid products-grid--home">
+      {% for p in products %}
+      <article class="product-card product-card--compact">
+        <div class="product-card__header">
+          <span class="eyebrow">{% bi p "kind" %}</span>
+          <span class="product-card__price">{% bi p "price" %}</span>
+        </div>
+        <h3 class="product-card__title">{% bi p "name" %}</h3>
+        <p class="product-card__blurb">{% bi p "blurb" %}</p>
+        <a href="{% url 'blog:product_detail' p.slug %}" class="btn btn--accent">
+          {% bi p "cta" %}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if featured %}
+  <section class="section section--sm">
+    <div class="section__header">
+      <h2 class="section__title">{% tr "Latest posts" "So'nggi maqolalar" %}</h2>
+      <a href="{% url 'blog:blog_list' %}" class="section__link">
+        {% tr "All posts" "Barchasi" %}
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="featured-grid {% if featured|length == 1 %}featured-grid--single{% endif %}">
       {% for post in featured %}
       {% if forloop.first %}
       <a href="{% url 'blog:post_detail' post.slug %}" class="featured-card featured-card--large">
         <div class="featured-card__meta">
-          <span class="eyebrow tr" data-en="Essay" data-uz="Esse">{% tr "Essay" "Esse" %}</span>
-          <span class="featured-card__meta .dot" style="width:3px;height:3px;border-radius:999px;background:var(--fg-soft);"></span>
-          <span class="eyebrow">{{ post.read_time }} <span class="tr" data-en="min" data-uz="daq">{% tr "min" "daq" %}</span></span>
+          <span class="eyebrow">{% tr "Article" "Maqola" %}</span>
+          <span class="meta-dot" aria-hidden="true"></span>
+          <span class="eyebrow">{{ post.read_time }} {% tr "min" "daq" %}</span>
         </div>
-        <h3 class="featured-card__title">
-          <span class="tr" data-en="{{ post.title_en }}" data-uz="{{ post.title_uz }}">{% bi post "title" %}</span>
-        </h3>
-        <p class="featured-card__dek">
-          <span class="tr" data-en="{{ post.dek_en }}" data-uz="{{ post.dek_uz }}">{% bi post "dek" %}</span>
-        </p>
+        <h3 class="featured-card__title">{% bi post "title" %}</h3>
+        <p class="featured-card__dek">{% bi post "dek" %}</p>
         <div class="featured-card__footer">
           <span class="tag"><span class="tag__hash">#</span>{{ post.tag }}</span>
           <span class="featured-card__read">
-            <span class="tr" data-en="Read" data-uz="O'qish">{% tr "Read" "O'qish" %}</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            {% tr "Read" "O'qish" %}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </span>
         </div>
       </a>
-      <div class="featured-grid__side">
+      {% if featured|length > 1 %}<div class="featured-grid__side">{% endif %}
       {% else %}
       <a href="{% url 'blog:post_detail' post.slug %}" class="featured-card">
         <div class="featured-card__meta">
-          <span class="eyebrow tr" data-en="Essay" data-uz="Esse">{% tr "Essay" "Esse" %}</span>
-          <span style="width:3px;height:3px;border-radius:999px;background:var(--fg-soft);"></span>
-          <span class="eyebrow">{{ post.read_time }} <span class="tr" data-en="min" data-uz="daq">{% tr "min" "daq" %}</span></span>
+          <span class="eyebrow">{% tr "Article" "Maqola" %}</span>
+          <span class="meta-dot" aria-hidden="true"></span>
+          <span class="eyebrow">{{ post.read_time }} {% tr "min" "daq" %}</span>
         </div>
-        <h3 class="featured-card__title">
-          <span class="tr" data-en="{{ post.title_en }}" data-uz="{{ post.title_uz }}">{% bi post "title" %}</span>
-        </h3>
-        <p class="featured-card__dek">
-          <span class="tr" data-en="{{ post.dek_en }}" data-uz="{{ post.dek_uz }}">{% bi post "dek" %}</span>
-        </p>
+        <h3 class="featured-card__title">{% bi post "title" %}</h3>
+        <p class="featured-card__dek">{% bi post "dek" %}</p>
         <div class="featured-card__footer">
           <span class="tag"><span class="tag__hash">#</span>{{ post.tag }}</span>
           <span class="featured-card__read">
-            <span class="tr" data-en="Read" data-uz="O'qish">{% tr "Read" "O'qish" %}</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            {% tr "Read" "O'qish" %}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </span>
         </div>
       </a>
       {% endif %}
-      {% if forloop.last %}</div>{% endif %}
+      {% if forloop.last and featured|length > 1 %}</div>{% endif %}
       {% endfor %}
     </div>
   </section>
+  {% endif %}
 
-  <!-- Recent -->
+  {% if recent %}
   <section class="section--sm">
-    <h2 style="font-size:18px;font-weight:600;color:var(--fg-muted);margin-bottom:8px;">
-      <span class="tr" data-en="Recent" data-uz="So'nggi">{% tr "Recent" "So'nggi" %}</span>
-    </h2>
+    <h2 class="section-subtitle">{% tr "Recent" "Yaqinda" %}</h2>
     <div>
       {% for post in recent %}
       <a href="{% url 'blog:post_detail' post.slug %}" class="post-row">
         <div class="post-row__date">{{ post.date|date:"Y-m-d" }}</div>
         <div>
-          <div class="post-row__title">
-            <span class="tr" data-en="{{ post.title_en }}" data-uz="{{ post.title_uz }}">{% bi post "title" %}</span>
-          </div>
-          <div class="post-row__dek">
-            <span class="tr" data-en="{{ post.dek_en }}" data-uz="{{ post.dek_uz }}">{% bi post "dek" %}</span>
-          </div>
+          <div class="post-row__title">{% bi post "title" %}</div>
+          <div class="post-row__dek">{% bi post "dek" %}</div>
         </div>
-        <div class="post-row__read">{{ post.read_time }} <span class="tr" data-en="min" data-uz="daq">{% tr "min" "daq" %}</span></div>
-        <!-- Mobile meta -->
-        <div class="post-row__meta" style="display:none;">
-          <span>{{ post.date|date:"Y-m-d" }}</span>
-          <span>{{ post.read_time }} <span class="tr" data-en="min" data-uz="daq">{% tr "min" "daq" %}</span></span>
-        </div>
+        <div class="post-row__read">{{ post.read_time }} {% tr "min" "daq" %}</div>
       </a>
       {% endfor %}
       <div class="divider"></div>
     </div>
   </section>
+  {% endif %}
 
-  <!-- Newsletter -->
   <section class="section--sm">
-    <div class="newsletter-box">
-      <div class="eyebrow">
-        <span class="tr" data-en="Newsletter" data-uz="Yangiliklar">{% tr "Newsletter" "Yangiliklar" %}</span>
-      </div>
+    <div class="newsletter-box newsletter-box--commercial">
+      <div class="eyebrow">{% tr "Newsletter" "Email xabar" %}</div>
       <h3 class="newsletter-box__title">
-        <span class="tr" data-en="One email a month. Unsubscribe whenever." data-uz="Oyiga bitta xat. Istalgan vaqtda obunani bekor qiling.">{% tr "One email a month. Unsubscribe whenever." "Oyiga bitta xat. Istalgan vaqtda obunani bekor qiling." %}</span>
+        {% tr "One email per month." "Oyiga bir xabar." %}
       </h3>
       <p class="newsletter-box__desc">
-        <span class="tr" data-en="What I shipped, what I read, and one thing I'm thinking about. No tracking, no upsells." data-uz="Nimani yetkazganim, nimani o'qiganim va o'ylab yurgan bir narsa. Kuzatuv yo'q, qo'shimcha sotuv yo'q.">{% tr "What I shipped, what I read, and one thing I'm thinking about. No tracking, no upsells." "Nimani yetkazganim, nimani o'qiganim va o'ylab yurgan bir narsa. Kuzatuv yo'q, qo'shimcha sotuv yo'q." %}</span>
+        {% tr "What I'm building, what I shipped, and early access to new products. No spam." "Nima ustida ishlayapman, nima chiqardim va yangi mahsulotlarga erta kirish. Reklama yo'q." %}
       </p>
-      <form class="newsletter-form" id="newsletterForm" method="post" action="{% url 'blog:subscribe' %}">
+      <form class="newsletter-form" id="newsletterForm" method="post" action="{% url 'blog:subscribe' %}" novalidate>
         {% csrf_token %}
-        <input type="email" name="email" placeholder="you@gmail.com" required>
-        <button type="submit" class="btn btn--primary">
-          <span class="tr" data-en="Subscribe" data-uz="Obuna bo'lish">{% tr "Subscribe" "Obuna bo'lish" %}</span>
+        <label class="visually-hidden" for="newsletter-email">{% tr "Email" "Email" %}</label>
+        <input id="newsletter-email" type="email" name="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required maxlength="254">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="hp-field" aria-hidden="true">
+        <button type="submit" class="btn btn--accent">
+          {% tr "Subscribe" "Obuna bo'lish" %}
         </button>
       </form>
     </div>

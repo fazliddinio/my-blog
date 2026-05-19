@@ -1,0 +1,32 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Testimonials{% endblock %}
+{% block topbar_title %}Testimonials{% endblock %}
+{% block topbar_actions %}<a href="{% url 'dashboard:testimonial_create' %}" class="btn btn--primary btn--sm">+ New</a>{% endblock %}
+
+{% block content %}
+<div class="dash-card">
+  <div class="dash-card__body">
+    {% if testimonials %}
+    <table class="dash-table">
+      <thead><tr><th>Name</th><th>Role</th><th>Quote</th><th></th></tr></thead>
+      <tbody>
+        {% for t in testimonials %}
+        <tr>
+          <td><strong>{{ t.name }}</strong></td>
+          <td>{{ t.role_en }}</td>
+          <td>{{ t.quote_en|truncatewords:12 }}</td>
+          <td>
+            <a href="{% url 'dashboard:testimonial_edit' t.pk %}" class="btn btn--ghost btn--sm">Edit</a>
+            <form method="post" action="{% url 'dashboard:testimonial_delete' t.pk %}" style="display:inline;" onsubmit="return confirm('Delete?')">{% csrf_token %}<button class="btn btn--ghost btn--sm" style="color:var(--danger-500);">Delete</button></form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="dash-empty"><div class="dash-empty__title">No testimonials yet</div></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

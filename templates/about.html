@@ -2,67 +2,60 @@
 {% load i18n_tags %}
 
 {% block title %}{% tr "About" "Haqimda" %} — fazliddin.com{% endblock %}
+{% block og_title %}{% tr "About" "Haqimda" %} — fazliddin.com{% endblock %}
 
 {% block content %}
-{% get_lang as LANG %}
 <div class="page-wrapper page-wrapper--narrow">
-  <div class="page-header">
-    <div class="eyebrow" style="margin-bottom:14px;">
-      <span class="tr" data-en="About" data-uz="Haqimda">{% tr "About" "Haqimda" %}</span>
-    </div>
-    <h1 class="page-header__title">
-      <span class="tr" data-en="Hi, I'm Fazliddin." data-uz="Salom, men Fazliddinman.">{% tr "Hi, I'm Fazliddin." "Salom, men Fazliddinman." %}</span>
-    </h1>
+  <header class="page-header">
+    <div class="eyebrow" style="margin-bottom:14px;">{% tr "About" "Haqimda" %}</div>
+    <h1 class="page-header__title">{% tr "Hi, I'm Fazliddin." "Salom, men Fazliddin." %}</h1>
     <p class="page-header__lead">
-      <span class="tr" data-en="A senior engineer who writes a lot. This page is the long version of that." data-uz="Ko'p yozadigan katta muhandisman. Bu sahifa — uning kengaytirilgan versiyasi.">{% tr "A senior engineer who writes a lot. This page is the long version of that." "Ko'p yozadigan katta muhandisman. Bu sahifa — uning kengaytirilgan versiyasi." %}</span>
+      {% tr "Senior engineer. I consult, build products, and write about what works." "Tajribali dasturchiman. Maslahat beraman, mahsulot yarataman va ishlaydigan narsalar haqida yozaman." %}
     </p>
-  </div>
+  </header>
 
   <div class="about-body">
     <p>
-      <span class="tr" data-en="I've been writing software professionally for fourteen years. Most of that has been on infrastructure-adjacent things: data pipelines, queues, search, the parts of the stack that don't have a UI. The other part has been on tools for engineers — observability, dev environments, the things I wished existed at the last place." data-uz="O'n to'rt yildan beri kasbiy darajada dasturiy ta'minot yozaman. Ko'p qismi — infratuzilmaga yaqin narsalar: ma'lumot oqimlari, navbatlar, qidiruv, foydalanuvchi interfeysi yo'q qatlamlar. Qolgan qismi — muhandislar uchun vositalar: kuzatuv, dev muhitlar, oldingi joyda bo'lishini istagan narsalar.">{% tr "I've been writing software professionally for fourteen years. Most of that has been on infrastructure-adjacent things: data pipelines, queues, search, the parts of the stack that don't have a UI. The other part has been on tools for engineers — observability, dev environments, the things I wished existed at the last place." "O'n to'rt yildan beri kasbiy darajada dasturiy ta'minot yozaman. Ko'p qismi — infratuzilmaga yaqin narsalar: ma'lumot oqimlari, navbatlar, qidiruv, foydalanuvchi interfeysi yo'q qatlamlar. Qolgan qismi — muhandislar uchun vositalar: kuzatuv, dev muhitlar, oldingi joyda bo'lishini istagan narsalar." %}</span>
+      {% tr "14 years building software — mostly backends, data pipelines, and infrastructure. I also build tools for engineers: monitoring, dev environments, the things I wished I had at my last job." "14 yildan beri dastur yozyapman — asosan backend, ma'lumot oqimlari va infratuzilma. Shuningdek, dasturchilar uchun vositalar yarataman: monitoring, ish muhiti va avvalgi ish joyimda bo'lishini istagan narsalar." %}
     </p>
     <p>
-      <span class="tr" data-en="I started this site in 2024 because I noticed I was answering the same questions in the same Slacks. It seemed cheaper to write things down once." data-uz="2024-yilda bu saytni boshladim, chunki bir xil Slack'larda bir xil savollarga javob berayotganimni payqadim. Bir marta yozib qo'yish arzonroq tuyuldi.">{% tr "I started this site in 2024 because I noticed I was answering the same questions in the same Slacks. It seemed cheaper to write things down once." "2024-yilda bu saytni boshladim, chunki bir xil Slack'larda bir xil savollarga javob berayotganimni payqadim. Bir marta yozib qo'yish arzonroq tuyuldi." %}</span>
+      {% tr "I started this site in 2024 because I kept answering the same questions in Slack. Writing once seemed smarter." "2024-yilda bu saytni ochdim — Slack'da bir xil savollarga qayta-qayta javob berayotgan edim. Bir marta yozib qo'yish aqlliroq tuyuldi." %}
     </p>
 
-    <h2>
-      <span class="tr" data-en="What I'm doing now" data-uz="Hozir nima qilayotganim">{% tr "What I'm doing now" "Hozir nima qilayotganim" %}</span>
-    </h2>
+    <h2>{% tr "What I'm doing now" "Hozir nima qilyapman" %}</h2>
     <p>
-      <span class="tr" data-en="Building <a href='/products/'><strong>tinyq Pro</strong></a> as a side business while consulting two days a week. Writing one essay a month. Reading <em>The Master and Margarita</em> for the second time." data-uz="<a href='/products/'><strong>tinyq Pro</strong></a>ni qo'shimcha biznes sifatida quryapman, haftada ikki kun konsalting qilaman. Oyiga bitta esse yozaman. <em>The Master and Margarita</em>ni ikkinchi marta o'qiyapman.">{% tr "Building " "" %}<a href="{% url 'blog:products' %}"><strong>tinyq Pro</strong></a>{% tr " as a side business while consulting two days a week. Writing one essay a month. Reading " "ni qo'shimcha biznes sifatida quryapman, haftada ikki kun konsalting qilaman. Oyiga bitta esse yozaman. " %}<em>The Master and Margarita</em>{% tr " for the second time." "ni ikkinchi marta o'qiyapman." %}</span>
+      {% tr "One blog post a month, consulting two days a week, and shipping tools when something annoys me." "Oyiga bitta maqola, haftada ikki kun maslahat va zerikarli narsa bo'lsa — yangi vosita yarataman." %}
+      <a href="{% url 'blog:now' %}">{% tr "Live update →" "Jonli yangilanish →" %}</a>
     </p>
 
-    <h2>
-      <span class="tr" data-en="Timeline" data-uz="Vaqt jadvali">{% tr "Timeline" "Vaqt jadvali" %}</span>
-    </h2>
+    {% if timeline %}
+    <h2>{% tr "Timeline" "Tarix" %}</h2>
+    {% endif %}
   </div>
 
+  {% if timeline %}
   <ul class="timeline">
     {% for entry in timeline %}
     <li class="timeline-item">
-      <span class="timeline-item__period">
-        <span class="tr" data-en="{{ entry.period_en }}" data-uz="{{ entry.period_uz }}">{% bi entry "period" %}</span>
-      </span>
-      <span class="timeline-item__desc">
-        <span class="tr" data-en="{{ entry.description_en }}" data-uz="{{ entry.description_uz }}">{% bi entry "description" %}</span>
-      </span>
+      <span class="timeline-item__period">{% bi entry "period" %}</span>
+      <span class="timeline-item__desc">{% bi entry "description" %}</span>
     </li>
     {% endfor %}
-    <div class="divider"></div>
   </ul>
+  <div class="divider"></div>
+  {% endif %}
 
   <div class="about-actions">
     <a href="mailto:hello@fazliddin.com" class="btn btn--secondary">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-      <span class="tr" data-en="Email me" data-uz="Menga yozing">{% tr "Email me" "Menga yozing" %}</span>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      {% tr "Email me" "Yozing" %}
     </a>
-    <a href="https://github.com/fazliddin" target="_blank" rel="noopener" class="btn btn--ghost">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+    <a href="https://github.com/fazliddin" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
       GitHub
     </a>
-    <a href="{% url 'blog:blog_list' %}" class="btn btn--ghost">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+    <a href="{% url 'blog:rss' %}" class="btn btn--ghost">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
       RSS
     </a>
   </div>

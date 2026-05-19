@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n_tags %}
+
+{% block title %}{% tr "Unsubscribed" "Obuna bekor qilindi" %} — fazliddin.com{% endblock %}
+
+{% block content %}
+<div class="page-wrapper page-wrapper--narrow error-page">
+  <h1 class="error-title">{% tr "You've been unsubscribed." "Obunangiz bekor qilindi." %}</h1>
+  <p class="error-lead muted">{{ email }}</p>
+  <p>{% tr "You won't receive any more emails. Changed your mind?" "Endi xat olmaysiz. Fikringiz o'zgardimi?" %}</p>
+  <div class="error-actions">
+    <a href="{% url 'blog:home' %}" class="btn btn--primary">{% tr "Back home" "Bosh sahifaga" %}</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load i18n_tags %}
+
+{% block title %}{% tr "Search" "Qidiruv" %} — fazliddin.com{% endblock %}
+{% block og_title %}{% tr "Search" "Qidiruv" %} — fazliddin.com{% endblock %}
+
+{% block content %}
+<div class="page-wrapper page-wrapper--narrow">
+  <header class="page-header">
+    <h1 class="page-header__title">{% tr "Search" "Qidiruv" %}</h1>
+    <p class="page-header__lead">
+      {% tr "Find posts by title, tag, or content." "Maqolalarni sarlavha, teg yoki matn bo'yicha toping." %}
+    </p>
+  </header>
+
+  <form class="search-form" method="get" action="{% url 'blog:search' %}" role="search">
+    <label for="search-input" class="visually-hidden">{% tr "Search" "Qidiruv" %}</label>
+    <input id="search-input" type="search" name="q" value="{{ query }}" class="search-form__input" placeholder="{% tr 'Search posts…' 'Maqola qidirish…' %}" autofocus minlength="2" maxlength="100">
+    <button type="submit" class="btn btn--primary">{% tr "Search" "Qidirish" %}</button>
+  </form>
+
+  {% if too_short %}
+  <p class="search-results-meta">{% tr "Type at least 2 characters." "Kamida 2 ta harf kiriting." %}</p>
+  {% elif query %}
+  <p class="search-results-meta">
+    {% if results %}
+      {{ paginator.count }} {% tr "results for" "natija" %} <strong>"{{ query }}"</strong>
+    {% else %}
+      {% tr "No results for" "Topilmadi" %} <strong>"{{ query }}"</strong>.
+      {% tr "Try another keyword or browse the" "Boshqa so'z bilan qidiring yoki" %} <a href="{% url 'blog:blog_list' %}">{% tr "blog" "blog" %}</a>.
+    {% endif %}
+  </p>
+  <div class="search-results">
+    {% for post in results %}
+    <a href="{% url 'blog:post_detail' post.slug %}" class="post-row">
+      <div class="post-row__date">{{ post.date|date:"Y-m-d" }}</div>
+      <div>
+        <div class="post-row__title">{% bi post "title" %}</div>
+        <div class="post-row__dek">{% bi post "dek" %}</div>
+      </div>
+      <div class="post-row__read">#{{ post.tag }}</div>
+    </a>
+    {% endfor %}
+  </div>
+  {% if paginator.num_pages > 1 %}
+  <nav class="pagination" aria-label="{% tr 'Pagination' 'Sahifalar' %}">
+    {% if page_obj.has_previous %}
+    <a href="?q={{ query|urlencode }}&page={{ page_obj.previous_page_number }}" class="pagination__link">← {% tr "Previous" "Oldingi" %}</a>
+    {% endif %}
+    <span class="pagination__info">{% tr "Page" "Sahifa" %} {{ page_obj.number }} / {{ paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+    <a href="?q={{ query|urlencode }}&page={{ page_obj.next_page_number }}" class="pagination__link">{% tr "Next" "Keyingi" %} →</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+  {% else %}
+  <div class="search-suggestions">
+    <p class="muted">{% tr "Try searching for:" "Quyidagilarni qidiring:" %}</p>
+    <div class="tag-filters">
+      <a href="?q=caching" class="tag-filter">caching</a>
+      <a href="?q=postgres" class="tag-filter">postgres</a>
+      <a href="?q=docker" class="tag-filter">docker</a>
+      <a href="?q=python" class="tag-filter">python</a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

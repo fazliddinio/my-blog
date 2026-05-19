@@ -1,55 +1,77 @@
 {% extends "base.html" %}
 {% load i18n_tags %}
 
-{% block title %}{% tr "Writing" "Yozuvlar" %} — fazliddin.com{% endblock %}
+{% block title %}{% tr "Blog" "Blog" %} — fazliddin.com{% endblock %}
+{% block og_title %}{% tr "Blog" "Blog" %} — fazliddin.com{% endblock %}
 
 {% block content %}
-{% get_lang as LANG %}
 <div class="page-wrapper">
-  <div class="page-header">
+  <header class="page-header">
     <div class="eyebrow" style="margin-bottom:14px;">
-      <span class="tr" data-en="Writing" data-uz="Yozuvlar">{% tr "Writing" "Yozuvlar" %}</span>
+      {% if current_tag and current_tag != 'all' %}#{{ current_tag }}{% else %}{% tr "Blog" "Blog" %}{% endif %}
     </div>
     <h1 class="page-header__title">
-      <span class="tr" data-en="Essays, deep dives, and the occasional rant." data-uz="Esselar, chuqur tahlillar va vaqti-vaqti bilan ehtirosli mulohazalar.">{% tr "Essays, deep dives, and the occasional rant." "Esselar, chuqur tahlillar va vaqti-vaqti bilan ehtirosli mulohazalar." %}</span>
+      {% if current_tag and current_tag != 'all' %}
+        {% tr "Posts tagged" "Maqolalar" %} <span class="muted">#{{ current_tag }}</span>
+      {% else %}
+        {% tr "Practical engineering posts." "Amaliy dasturlash maqolalari." %}
+      {% endif %}
     </h1>
     <p class="page-header__lead">
-      <span class="tr" data-en="Long-form posts on engineering, career, and what I'm shipping. About one a month." data-uz="Muhandislik, karyera va men yetkazayotgan ishlar haqida uzun postlar. Oyiga bittaga yaqin.">{% tr "Long-form posts on engineering, career, and what I'm shipping. About one a month." "Muhandislik, karyera va men yetkazayotgan ishlar haqida uzun postlar. Oyiga bittaga yaqin." %}</span>
+      {% tr "Backend, DevOps, and lessons from real projects. About one post a month." "Backend, DevOps va haqiqiy loyihalardan olingan tajribalar. Oyiga taxminan bitta maqola." %}
     </p>
-  </div>
+  </header>
 
-  <!-- Tag Filters -->
-  <div class="tag-filters">
+  <nav class="tag-filters" aria-label="{% tr 'Filter by tag' 'Teg bo‘yicha' %}">
     {% for t in tags %}
-    <a href="{% if t == 'all' %}{% url 'blog:blog_list' %}{% else %}{% url 'blog:blog_list' %}?tag={{ t }}{% endif %}"
-       class="tag-filter {% if t == current_tag %}active{% endif %}">
-      {% if t == 'all' %}<span class="tr" data-en="All" data-uz="Hammasi">{% tr "All" "Hammasi" %}</span>{% else %}#{{ t }}{% endif %}
+    {% if t == 'all' %}
+    <a href="{% url 'blog:blog_list' %}" class="tag-filter {% if current_tag == 'all' %}active{% endif %}" {% if current_tag == 'all' %}aria-current="page"{% endif %}>
+      {% tr "All" "Hammasi" %}
     </a>
+    {% else %}
+    <a href="{% url 'blog:tag_list' t|slugify %}" class="tag-filter {% if t == current_tag %}active{% endif %}" {% if t == current_tag %}aria-current="page"{% endif %}>
+      #{{ t }}
+    </a>
+    {% endif %}
     {% endfor %}
-  </div>
+  </nav>
 
-  <!-- Posts by Year -->
+  {% if posts_by_year %}
   <div>
     {% for year, posts in posts_by_year %}
-    <div style="margin-bottom:32px;">
-      <div class="year-label">{{ year }}</div>
+    <section class="post-year">
+      <h2 class="year-label">{{ year }}</h2>
       {% for post in posts %}
       <a href="{% url 'blog:post_detail' post.slug %}" class="post-row">
         <div class="post-row__date">{{ post.date|date:"Y-m-d" }}</div>
         <div>
-          <div class="post-row__title">
-            <span class="tr" data-en="{{ post.title_en }}" data-uz="{{ post.title_uz }}">{% bi post "title" %}</span>
-          </div>
-          <div class="post-row__dek">
-            <span class="tr" data-en="{{ post.dek_en }}" data-uz="{{ post.dek_uz }}">{% bi post "dek" %}</span>
-          </div>
+          <div class="post-row__title">{% bi post "title" %}</div>
+          <div class="post-row__dek">{% bi post "dek" %}</div>
         </div>
-        <div class="post-row__read">{{ post.read_time }} <span class="tr" data-en="min" data-uz="daq">{% tr "min" "daq" %}</span></div>
+        <div class="post-row__read">{{ post.read_time }} {% tr "min" "daq" %}</div>
       </a>
       {% endfor %}
       <div class="divider"></div>
-    </div>
+    </section>
     {% endfor %}
   </div>
+
+  {% if paginator.num_pages > 1 %}
+  <nav class="pagination" aria-label="{% tr 'Pagination' 'Sahifalar' %}">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}" class="pagination__link">← {% tr "Previous" "Oldingi" %}</a>
+    {% endif %}
+    <span class="pagination__info">{% tr "Page" "Sahifa" %} {{ page_obj.number }} / {{ paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="pagination__link">{% tr "Next" "Keyingi" %} →</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+
+  {% else %}
+  <div class="empty-state">
+    <p>{% tr "No posts yet." "Hali maqola yo'q." %}</p>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

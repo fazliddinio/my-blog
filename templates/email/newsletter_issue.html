@@ -1,0 +1,11 @@
+<h1 style="font-family:sans-serif;font-size:22px;">Issue #{{ issue.number }}: {{ issue.title_en }}</h1>
+<p style="font-family:sans-serif;color:#666;">{{ issue.date_en }}</p>
+<div style="font-family:sans-serif;line-height:1.7;">
+  {{ issue.content_en|safe }}
+</div>
+<p style="font-family:sans-serif;margin-top:32px;">
+  <a href="{{ issue_url }}">Read online</a>
+</p>
+<p style="font-family:sans-serif;color:#666;font-size:12px;margin-top:48px;">
+  <a href="{{ unsubscribe_url }}">Unsubscribe</a>
+</p>

@@ -1,40 +1,34 @@
 {% extends "base.html" %}
 {% load i18n_tags %}
 
-{% block title %}{% tr "Uses" "Vositalar" %} — fazliddin.com{% endblock %}
+{% block title %}{% tr "Uses" "Texnologiyalar" %} — fazliddin.com{% endblock %}
+{% block og_title %}{% tr "Uses" "Texnologiyalar" %} — fazliddin.com{% endblock %}
 
 {% block content %}
-{% get_lang as LANG %}
 <div class="page-wrapper page-wrapper--narrow">
-  <div class="page-header">
-    <div class="eyebrow" style="margin-bottom:14px;">
-      <span class="tr" data-en="My tech stack" data-uz="Mening tarkibim">{% tr "My tech stack" "Mening tarkibim" %}</span>
-    </div>
-    <h1 class="page-header__title">
-      <span class="tr" data-en="What I use, and why." data-uz="Nimadan foydalanaman, va nega.">{% tr "What I use, and why." "Nimadan foydalanaman, va nega." %}</span>
-    </h1>
+  <header class="page-header">
+    <div class="eyebrow" style="margin-bottom:14px;">{% tr "My stack" "Ishlatadigan texnologiyalar" %}</div>
+    <h1 class="page-header__title">{% tr "What I use every day." "Har kuni ishlatadigan vositalarim." %}</h1>
     <p class="page-header__lead">
-      <span class="tr" data-en="Updated whenever something changes — which is rarely. The boring stack is the productive stack." data-uz="Biror narsa o'zgarganda yangilanadi — bu kamdan-kam holat. Zerikarli to'plam — samarali to'plamdir.">{% tr "Updated whenever something changes — which is rarely. The boring stack is the productive stack." "Biror narsa o'zgarganda yangilanadi — bu kamdan-kam holat. Zerikarli to'plam — samarali to'plamdir." %}</span>
+      {% tr "Updated when something changes — which is rare. A boring stack is a productive stack." "Biror narsa o'zgarganda yangilanadi — bu kamdan-kam. Sodda to'plam — samarali to'plam." %}
     </p>
-  </div>
+  </header>
 
-  <div style="display:grid;gap:40px;">
+  <div class="uses-list">
     {% for cat in categories %}
     <section class="uses-section">
-      <h2 class="uses-section__title">
-        <span class="tr" data-en="{{ cat.title_en }}" data-uz="{{ cat.title_uz }}">{% bi cat "title" %}</span>
-      </h2>
-      <dl style="margin:0;">
+      <h2 class="uses-section__title">{% bi cat "title" %}</h2>
+      <dl class="uses-dl">
         {% for item in cat.items.all %}
         <div class="uses-item">
           <dt class="uses-item__name">{{ item.name }}</dt>
-          <dd class="uses-item__note">
-            <span class="tr" data-en="{{ item.note_en }}" data-uz="{{ item.note_uz }}">{% bi item "note" %}</span>
-          </dd>
+          <dd class="uses-item__note">{% bi item "note" %}</dd>
         </div>
         {% endfor %}
       </dl>
     </section>
+    {% empty %}
+    <div class="empty-state"><p>{% tr "Nothing listed yet." "Hozircha ro'yxat bo'sh." %}</p></div>
     {% endfor %}
   </div>
 </div>
